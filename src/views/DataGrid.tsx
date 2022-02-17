@@ -147,14 +147,6 @@ const App: FC = () => {
               searchPlaceholder: "Procurar",
             },
           }}
-          detailPanel={(rowData) => {
-            getProcess(rowData.numeroProcesso);
-            return (
-              <Box sx={{ width: 1000, marginLeft: 0 }}>
-                <Tabs />
-              </Box>
-            );
-          }}
           onRowClick={(event, rowData) =>
             chrome.runtime.sendMessage({
               action: "showREIDIDialog",
