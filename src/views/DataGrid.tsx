@@ -3,12 +3,9 @@ import Button from "@mui/material/Button";
 import MaterialTable, { Column, MTableToolbar } from "material-table";
 import { Box } from "@mui/material";
 
-import {
-  getSpreadsheet,
-  createRow,
-  deleteRow,
-  updateRow,
-} from "../services/api";
+import { getSpreadsheet, deleteRow, updateRow, api } from "../services/api";
+
+import { createRowModel } from "../services/utils";
 
 import Tabs from "../components/Tabs";
 import { DialogContext } from "../contexts/dialogContext";
@@ -72,6 +69,15 @@ const App: FC = () => {
     getData();
   }, []);
 
+  const handleRowAdd = async (newData) => {
+    const value = createRowModel(newData);
+    try {
+      await api.post("/spreadsheet", { value });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleVision = () => {
     setColumns([
       {
@@ -112,7 +118,8 @@ const App: FC = () => {
           data={data}
           columns={columns}
           editable={{
-            onRowAdd: (newData) => createRow(newData).then(() => getData()),
+            onRowAdd: (newData) =>
+              handleRowAdd(newData).then(() => getData()),
             onRowUpdate: (newData, oldData) =>
               updateRow(newData, oldData).then(() => getData()),
             onRowDelete: (oldData) =>
