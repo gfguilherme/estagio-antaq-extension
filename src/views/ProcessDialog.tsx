@@ -2,7 +2,7 @@ import React, { FC, useState, useContext, useEffect } from "react";
 
 // API
 
-import { updateRow, api } from "../services/api";
+import { api } from "../services/api";
 
 import { createRowModel } from "../services/utils";
 
@@ -72,11 +72,14 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
     }
   };
 
-  // Atualiza o processo
-  const handleUpdate = async (callback) => {
+  // Requisita a atualização do processo
+  const handleProcessUpdate = async (callback) => {
     try {
       setLoading(true);
-      await updateRow(process, process.id);
+
+      const value = createRowModel(process);
+      await api.put(`/spreadsheet/${process.id}`, { value });
+
       const message = `Processo atualizado!`;
       const severity = "success";
 
@@ -112,7 +115,7 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
       ) : (
         <REIDIDialog
           actionText="EDITAR"
-          onClick={handleUpdate}
+          onClick={handleProcessUpdate}
           title="Editando REIDI do processo n.º"
           isOpen
           isLoading={isLoading}

@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import MaterialTable, { Column, MTableToolbar } from "material-table";
 import { Box } from "@mui/material";
 
-import { deleteRow, updateRow, api } from "../services/api";
+import { deleteRow, api } from "../services/api";
 
 import { createRowModel } from "../services/utils";
 
@@ -82,6 +82,16 @@ const App: FC = () => {
     }
   };
 
+  // Requisita a atualização do processo
+  const handleRowUpdate = async (newData, oldData) => {
+    try {
+      const value = createRowModel(newData);
+      await api.put(`/spreadsheet/${newData.id}`, { value });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleVision = () => {
     setColumns([
       {
@@ -122,9 +132,10 @@ const App: FC = () => {
           data={data}
           columns={columns}
           editable={{
-            onRowAdd: (newData) => handleRowAdd(newData).then(() => getProcesses()),
+            onRowAdd: (newData) =>
+              handleRowAdd(newData).then(() => getProcesses()),
             onRowUpdate: (newData, oldData) =>
-              updateRow(newData, oldData).then(() => getProcesses()),
+              handleRowUpdate(newData, oldData).then(() => getProcesses()),
             onRowDelete: (oldData) =>
               deleteRow(oldData.id).then(() => getProcesses()),
           }}
