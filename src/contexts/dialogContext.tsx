@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 
-import { getRow } from "../services/api";
+import { api } from "../services/api";
 
 export interface Process {
   analiseGPO: string;
@@ -69,12 +69,14 @@ type ProcessContextProviderProps = {
 export function DialogProvider({ children }: ProcessContextProviderProps) {
   const [process, setProcess] = useState<Process>(initialProcess);
 
-  const getProcess = async (numeroProcesso) => {
+  // Requisita e define um processo
+  const getProcess = async (processNumber: string) => {
+    const encodedProcessNumber = encodeURIComponent(processNumber);
     try {
-      const response = await getRow(numeroProcesso);
-      setProcess(response);
+      const response = await api.get(`/row/${encodedProcessNumber}`);
+      setProcess(response.data);
     } catch (error) {
-      throw new Error(error);
+      console.error(error);
     }
   };
 

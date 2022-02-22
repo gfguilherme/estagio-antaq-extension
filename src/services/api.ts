@@ -7,17 +7,6 @@ export const api = axios.create({
 
 const baseUrl = "http://localhost:3333/api";
 
-// Obtêm a linha do processo
-export async function getRow(processNumber: string) {
-  const encodedProcessNumber = encodeURIComponent(processNumber);
-  try {
-    const response = await axios.get(`${baseUrl}/row/${encodedProcessNumber}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
 // update
 export async function updateRow(newData: Process, id: number) {
   try {
