@@ -5,7 +5,7 @@ import { Skeleton } from "@mui/material";
 
 // Componentes
 import CreateButton from "../views/actionButtons/CreateButton";
-import { matchRows } from "../services/api";
+import { matchRows } from "../services/utils";
 import renderForm from "./dialogScript";
 import AlertDialog from "../components/Dialog";
 import EditButton from "../views/actionButtons/EditButton";
@@ -112,11 +112,9 @@ const addClasses = () => {
 
 const renderButtons = async () => {
   //  Coleção de número de processos do SEI
-  const SEIProcessNumbers: string[] = processNumberCollection.map(
-    (element) => element.textContent
+  const SEIProcessNumbers: string[] = processNumberCollection.map((element) =>
+    element.getAttribute("title")
   );
-
-  // Processos correspondentes na planilha
 
   const response = await matchRows(SEIProcessNumbers);
 

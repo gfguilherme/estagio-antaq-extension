@@ -19,17 +19,3 @@ export async function deleteRow(processNumber: string) {
     throw new Error(error);
   }
 }
-
-export async function matchRows(rows: string[]): Promise<string[]> {
-  try {
-    const response = await axios.get(`${baseUrl}/teste`);
-
-    const { rowsProcessNumbers } = response.data;
-
-    const result = rows.filter((item) => rowsProcessNumbers.includes(item));
-
-    return result;
-  } catch (error) {
-    throw new Error(error);
-  }
-}

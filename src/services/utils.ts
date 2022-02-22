@@ -1,4 +1,5 @@
 import { Process } from "../contexts/dialogContext";
+import { api } from "./api";
 
 // Retorna um objeto JSON correspondente a linha da planilha.
 export const createRowModel = (row: Process) => {
@@ -25,4 +26,17 @@ export const createRowModel = (row: Process) => {
       row.deliberacaoDiretoria,
   };
   return value;
+};
+
+export const matchRows = async (rows: string[]) => {
+  try {
+    const response = await api.get(`/match-rows`);
+    const { rowsProcessNumbers } = response.data;
+
+    const result = rows.filter((item) => rowsProcessNumbers.includes(item));
+    return result;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
