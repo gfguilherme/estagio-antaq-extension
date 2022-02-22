@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import MaterialTable, { Column, MTableToolbar } from "material-table";
 import { Box } from "@mui/material";
 
-import { getSpreadsheet, deleteRow, updateRow, api } from "../services/api";
+import { deleteRow, updateRow, api } from "../services/api";
 
 import { createRowModel } from "../services/utils";
 
@@ -59,14 +59,18 @@ const App: FC = () => {
   const { process, setProcess, getProcess } = useContext(DialogContext);
   const [columns, setColumns] = useState<Column<any>[]>(initialState);
 
-  async function getData() {
-    const data = await getSpreadsheet();
-
-    setData(data);
-  }
+  // Requisição GET para obter todos os dados cadastrados
+  const getProcesses = async () => {
+    try {
+      const response = await api.get(`/spreadsheet`);
+      setData(response.data);
+    } catch (error) {
+      console.warn(error);
+    }
+  };
 
   useEffect(() => {
-    getData();
+    getProcesses();
   }, []);
 
   const handleRowAdd = async (newData) => {
@@ -118,12 +122,11 @@ const App: FC = () => {
           data={data}
           columns={columns}
           editable={{
-            onRowAdd: (newData) =>
-              handleRowAdd(newData).then(() => getData()),
+            onRowAdd: (newData) => handleRowAdd(newData).then(() => getProcesses()),
             onRowUpdate: (newData, oldData) =>
-              updateRow(newData, oldData).then(() => getData()),
+              updateRow(newData, oldData).then(() => getProcesses()),
             onRowDelete: (oldData) =>
-              deleteRow(oldData.id).then(() => getData()),
+              deleteRow(oldData.id).then(() => getProcesses()),
           }}
           options={{
             search: true,

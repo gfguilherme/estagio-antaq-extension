@@ -7,16 +7,6 @@ export const api = axios.create({
 
 const baseUrl = "http://localhost:3333/api";
 
-// read
-export async function getSpreadsheet() {
-  try {
-    const response = await axios.get(`${baseUrl}/spreadsheet`);
-    return response.data;
-  } catch (error) {
-    console.warn(error);
-  }
-}
-
 // Obtêm a linha do processo
 export async function getRow(processNumber: string) {
   const encodedProcessNumber = encodeURIComponent(processNumber);
