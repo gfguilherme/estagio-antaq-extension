@@ -7,7 +7,6 @@ import { Skeleton } from "@mui/material";
 import CreateButton from "../views/actionButtons/CreateButton";
 import { matchRows } from "../services/api";
 import renderForm from "./dialogScript";
-import DeleteButton from "../views/actionButtons/DeleteButton";
 import AlertDialog from "../components/Dialog";
 import EditButton from "../views/actionButtons/EditButton";
 
@@ -127,7 +126,6 @@ const renderButtons = async () => {
       ReactDOM.render(
         <>
           <EditButton element={element} />
-          <DeleteButton element={element} />
         </>,
         element
       );
