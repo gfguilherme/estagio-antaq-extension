@@ -2,7 +2,9 @@ import React, { FC, useState, useContext, useEffect } from "react";
 
 // API
 
-import { createRow, updateRow } from "../services/api";
+import { updateRow, api } from "../services/api";
+
+import { createRowModel } from "../services/utils";
 
 // Componentes
 import REIDIDialog from "../components/REIDIDialog";
@@ -46,10 +48,11 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
   }, []);
 
   // Cria um novo Processo
-  const handleCreate = async (callback) => {
+  const handleCreateProcess = async (callback) => {
     try {
       setLoading(true);
-      await createRow(process);
+      const value = createRowModel(process);
+      await api.post("/spreadsheet", { value });
 
       chrome.runtime.sendMessage({
         action: "reloadREIDI",
@@ -98,7 +101,7 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
       {type === "create" ? (
         <REIDIDialog
           actionText="CRIAR"
-          onClick={handleCreate}
+          onClick={handleCreateProcess}
           title="Criando REIDI para o processo n.º"
           isOpen
           isLoading={isLoading}
