@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import MaterialTable, { Column, MTableToolbar } from "material-table";
 import { Box } from "@mui/material";
 
-import { deleteRow, api } from "../services/api";
+import { api } from "../services/api";
 
 import { createRowModel } from "../services/utils";
 
@@ -92,6 +92,16 @@ const App: FC = () => {
     }
   };
 
+  const handleRowDelete = async (oldData) => {
+    const encodedProcessNumber = encodeURIComponent(oldData.numeroProcesso);
+    try {
+      const response = await api.delete(`/row/${encodedProcessNumber}`);
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleVision = () => {
     setColumns([
       {
@@ -137,7 +147,7 @@ const App: FC = () => {
             onRowUpdate: (newData, oldData) =>
               handleRowUpdate(newData, oldData).then(() => getProcesses()),
             onRowDelete: (oldData) =>
-              deleteRow(oldData.id).then(() => getProcesses()),
+              handleRowDelete(oldData).then(() => getProcesses()),
           }}
           options={{
             search: true,
