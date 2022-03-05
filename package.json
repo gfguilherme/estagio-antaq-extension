@@ -8,6 +8,7 @@
   },
   "author": "Guilherme Gonçalves Ferreira",
   "devDependencies": {
+    "@date-io/core": "^2.13.1",
     "@date-io/date-fns": "^2.11.0",
     "@date-io/luxon": "^2.11.1",
     "@emotion/react": "^11.4.1",
@@ -36,6 +37,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "formik": "^2.2.9",
     "html-webpack-plugin": "^4.5.1",
+    "jquery": "^3.6.0",
     "luxon": "^2.0.2",
     "material-table": "^1.69.3",
     "react": "^17.0.1",
@@ -47,8 +49,6 @@
     "webpack": "^5.16.0",
     "webpack-cli": "^4.4.0",
     "webpack-merge": "^5.7.3",
-    "yup": "^0.32.9",
-    "jquery": "^3.6.0"
-  },
-  "dependencies": {}
+    "yup": "^0.32.9"
+  }
 }
