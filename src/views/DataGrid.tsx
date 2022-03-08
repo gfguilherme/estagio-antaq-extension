@@ -50,7 +50,7 @@ export default function DataGrid() {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState<Column<any>[]>(initialState);
 
-  // Requisição GET para obter todos os dados cadastrados
+  // Requisita os processos cadastrados
   const getProcesses = async () => {
     try {
       const response = await api.get(`/spreadsheet`);
@@ -64,6 +64,7 @@ export default function DataGrid() {
     getProcesses();
   }, []);
 
+  // Requisita a criação de um novo processo
   const handleRowAdd = async (newData) => {
     const value = createRowModel(newData);
     try {
@@ -75,19 +76,19 @@ export default function DataGrid() {
 
   // Requisita a atualização do processo
   const handleRowUpdate = async (newData, oldData) => {
+    const value = createRowModel(newData);
     try {
-      const value = createRowModel(newData);
       await api.put(`/spreadsheet/${newData.id}`, { value });
     } catch (error) {
       console.error(error);
     }
   };
 
+  // Requisita a exclusão do processo
   const handleRowDelete = async (oldData) => {
     const encodedProcessNumber = encodeURIComponent(oldData.numeroProcesso);
     try {
-      const response = await api.delete(`/row/${encodedProcessNumber}`);
-      return response;
+      await api.delete(`/row/${encodedProcessNumber}`);
     } catch (error) {
       console.error(error);
     }
@@ -100,42 +101,23 @@ export default function DataGrid() {
           {
             icon: "visibility",
             tooltip: "Visualizar processo",
-            onClick: (event, rowData) => console.log(event, rowData),
+            onClick: (event, rowData) =>
+              chrome.runtime.sendMessage({
+                action: "showREIDIDialog",
+                type: "edit",
+                numeroProcesso: rowData.numeroProcesso,
+              }),
           },
         ]}
-        style={{ whiteSpace: "nowrap" }}
-        title="Tabela REIDI"
-        data={data}
         columns={columns}
+        data={data}
         editable={{
           onRowAdd: (newData) =>
-            handleRowAdd(newData).then(() => getProcesses()),
-          onRowUpdate: (newData, oldData) =>
-            handleRowUpdate(newData, oldData).then(() => getProcesses()),
+            handleRowAdd(newData).then(getProcesses),
           onRowDelete: (oldData) =>
-            handleRowDelete(oldData).then(() => getProcesses()),
-        }}
-        options={{
-          search: true,
-          paging: true,
-          filtering: true,
-          grouping: true,
-          exportMenu: [
-            {
-              label: "Export PDF",
-              exportFunc: (cols, datas) => ExportPdf(cols, datas, ""),
-            },
-            {
-              label: "Export CSV",
-              exportFunc: (cols, datas) => ExportCsv(cols, datas, ""),
-            },
-          ],
-          sorting: true,
-          pageSize: 5,
-          pageSizeOptions: [5, 10, 15, 20, 25],
-          maxBodyHeight: 700,
-          minBodyHeight: 700,
-          overflowY: "scroll",
+            handleRowDelete(oldData).then(getProcesses),
+          onRowUpdate: (newData, oldData) =>
+            handleRowUpdate(newData, oldData).then(getProcesses),
         }}
         localization={{
           body: {
@@ -160,6 +142,30 @@ export default function DataGrid() {
             numeroProcesso: rowData.numeroProcesso,
           })
         }
+        options={{
+          search: true,
+          paging: true,
+          filtering: true,
+          grouping: true,
+          sorting: true,
+          pageSize: 5,
+          pageSizeOptions: [5, 10, 15, 20, 25],
+          maxBodyHeight: 700,
+          minBodyHeight: 700,
+          overflowY: "scroll",
+          exportMenu: [
+            {
+              label: "Export PDF",
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, ""),
+            },
+            {
+              label: "Export CSV",
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, ""),
+            },
+          ],
+        }}
+        style={{ whiteSpace: "nowrap" }}
+        title="Tabela REIDI"
       />
     </div>
   );
