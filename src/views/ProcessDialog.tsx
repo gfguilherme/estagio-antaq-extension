@@ -1,18 +1,8 @@
-import React, {
-  FC, useState, useContext, useEffect,
-} from 'react';
-
-// API
-
-import { api } from '../services/api';
-
-import { createRowModel } from '../services/utils';
-
-// Componentes
+import React, { useContext, useEffect, useState } from 'react';
 import REIDIDialog from '../components/REIDIDialog';
-
-// Contexto
 import { DialogContext } from '../contexts/dialogContext';
+import { api } from '../services/api';
+import { createRowModel } from '../services/utils';
 
 interface ProcessDialogProps {
   container: Element;
@@ -21,12 +11,12 @@ interface ProcessDialogProps {
   type: string;
 }
 
-const ProcessDialog: FC<ProcessDialogProps> = ({
+export default function ProcessDialog({
   container,
   numeroProcesso,
   idProcedimento,
   type,
-}) => {
+}: ProcessDialogProps): React.ReactNode {
   const { process, setProcess, getProcess } = useContext(DialogContext);
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -102,7 +92,7 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
   }, []);
 
   return (
-    <>
+    <div>
       {type === 'create' ? (
         <REIDIDialog
           actionText="CRIAR"
@@ -126,8 +116,6 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
           numeroProcesso={numeroProcesso}
         />
       )}
-    </>
+    </div>
   );
-};
-
-export default ProcessDialog;
+}
