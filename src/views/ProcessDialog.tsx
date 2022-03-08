@@ -1,16 +1,18 @@
-import React, { FC, useState, useContext, useEffect } from "react";
+import React, {
+  FC, useState, useContext, useEffect,
+} from 'react';
 
 // API
 
-import { api } from "../services/api";
+import { api } from '../services/api';
 
-import { createRowModel } from "../services/utils";
+import { createRowModel } from '../services/utils';
 
 // Componentes
-import REIDIDialog from "../components/REIDIDialog";
+import REIDIDialog from '../components/REIDIDialog';
 
 // Contexto
-import { DialogContext } from "../contexts/dialogContext";
+import { DialogContext } from '../contexts/dialogContext';
 
 interface ProcessDialogProps {
   container: Element;
@@ -30,14 +32,14 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
 
   const sendMessage = (message, severity) => {
     chrome.runtime.sendMessage({
-      action: "showSnackbar",
+      action: 'showSnackbar',
       message,
       severity,
     });
   };
 
   useEffect(() => {
-    if (type === "edit") {
+    if (type === 'edit') {
       setLoading(true);
       const fetchMyAPI = async () => {
         await getProcess(numeroProcesso);
@@ -52,20 +54,20 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
     try {
       setLoading(true);
       const value = createRowModel(process);
-      await api.post("/spreadsheet", { value });
+      await api.post('/spreadsheet', { value });
 
       chrome.runtime.sendMessage({
-        action: "reloadREIDI",
+        action: 'reloadREIDI',
       });
 
       const message = `Sucesso ao criar REIDI para o processo n.º ${numeroProcesso}`;
-      const severity = "success";
+      const severity = 'success';
 
       sendMessage(message, severity);
       callback();
     } catch (error) {
       const message = `Falha ao criar REIDI para o processo n.º ${numeroProcesso}`;
-      const severity = "error";
+      const severity = 'error';
 
       sendMessage(message, severity);
       callback();
@@ -80,14 +82,14 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
       const value = createRowModel(process);
       await api.put(`/spreadsheet/${process.id}`, { value });
 
-      const message = `Processo atualizado!`;
-      const severity = "success";
+      const message = 'Processo atualizado!';
+      const severity = 'success';
 
       sendMessage(message, severity);
       callback();
     } catch (error) {
       const message = `Falha ao atualizar o processo n.º ${numeroProcesso} `;
-      const severity = "error";
+      const severity = 'error';
 
       sendMessage(message, severity);
       callback();
@@ -101,7 +103,7 @@ const ProcessDialog: FC<ProcessDialogProps> = ({
 
   return (
     <>
-      {type === "create" ? (
+      {type === 'create' ? (
         <REIDIDialog
           actionText="CRIAR"
           onClick={handleCreateProcess}
