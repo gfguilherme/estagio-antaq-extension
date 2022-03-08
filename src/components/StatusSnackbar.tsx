@@ -1,55 +1,51 @@
-import * as React from "react";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertColor, AlertProps } from "@mui/material/Alert";
-import { unmountComponentAtNode } from "react-dom";
+import * as React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
+import { unmountComponentAtNode } from 'react-dom';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
-  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+    <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 ));
 
 interface StatusSnackbarProps {
-  isOpen: boolean;
-  message: string;
-  severity: AlertColor;
-  container: Element;
+    isOpen: boolean;
+    message: string;
+    severity: AlertColor;
+    container: Element;
 }
 
 export default function StatusSnackbar({
-  isOpen,
-  message,
-  severity,
-  container,
+    isOpen,
+    message,
+    severity,
+    container,
 }: StatusSnackbarProps) {
-  const [open, setOpen] = React.useState(isOpen);
+    const [open, setOpen] = React.useState(isOpen);
 
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      unmountComponentAtNode(container);
-    }
-    setOpen(false);
-    unmountComponentAtNode(container);
-  };
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            unmountComponentAtNode(container);
+        }
+        setOpen(false);
+        unmountComponentAtNode(container);
+    };
 
-  return (
-    <>
-      {open ? (
-        <Snackbar
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          open={open}
-          autoHideDuration={6000}
-          onClose={handleClose}
-        >
-          <Alert
-            onClose={handleClose}
-            severity={severity}
-            sx={{ width: "100%" }}
-          >
-            {message}
-          </Alert>
-        </Snackbar>
-      ) : (
-        ""
-      )}
-    </>
-  );
+    return (
+        <>
+            {open ? (
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                >
+                    <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                        {message}
+                    </Alert>
+                </Snackbar>
+            ) : (
+                ''
+            )}
+        </>
+    );
 }
