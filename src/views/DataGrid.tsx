@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, FC } from "react";
 import Button from "@mui/material/Button";
-import MaterialTable, { Column, MTableToolbar } from "material-table";
+import MaterialTable, { Column } from "@material-table/core";
+import { ExportCsv, ExportPdf } from "@material-table/exporters";
 import { Box } from "@mui/material";
 
 import { api } from "../services/api";
@@ -54,7 +55,7 @@ const initialState: Column<any>[] = [
   },
 ];
 
-const App: FC = () => {
+export default function DataGrid() {
   const [data, setData] = useState([]);
   const { process, setProcess, getProcess } = useContext(DialogContext);
   const [columns, setColumns] = useState<Column<any>[]>(initialState);
@@ -154,7 +155,16 @@ const App: FC = () => {
             paging: true,
             filtering: true,
             grouping: true,
-            exportButton: true,
+            exportMenu: [
+              {
+                label: "Export PDF",
+                exportFunc: (cols, datas) => ExportPdf(cols, datas, ""),
+              },
+              {
+                label: "Export CSV",
+                exportFunc: (cols, datas) => ExportCsv(cols, datas, ""),
+              },
+            ],
             sorting: true,
             pageSize: 5,
             pageSizeOptions: [5, 10, 15, 20, 25],
@@ -185,22 +195,22 @@ const App: FC = () => {
               numeroProcesso: rowData.numeroProcesso,
             })
           }
-          cellEditable={{
-            cellStyle: {},
-            onCellEditApproved: (newValue, oldValue, rowData, columnDef) =>
-              new Promise((resolve, reject) => {
-                console.log(newValue, columnDef);
-                setTimeout(resolve, 4000);
-              }),
-          }}
+          // cellEditable={{
+          //   cellStyle: {},
+          //   onCellEditApproved: (newValue, oldValue, rowData, columnDef) =>
+          //     new Promise((resolve, reject) => {
+          //       console.log(newValue, columnDef);
+          //       setTimeout(resolve, 4000);
+          //     }),
+          // }}
           components={{
             Toolbar: (props) => (
               <>
                 <BasicMenu
                   title="Mostrar colunas"
-                  menuItems={[{ title: "teste", onClick: () => {} }]}
+                  menuItems={[{ title: "teste", onClick: () => { } }]}
                 />
-                <MTableToolbar {...props} />
+                {/* <MTableToolbar {...props} /> */}
               </>
             ),
           }}
@@ -214,6 +224,4 @@ const App: FC = () => {
       </Button>
     </>
   );
-};
-
-export default App;
+}
