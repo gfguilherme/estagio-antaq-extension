@@ -1,17 +1,8 @@
-import React, { useContext, useEffect, useState, FC } from "react";
-import Button from "@mui/material/Button";
 import MaterialTable, { Column } from "@material-table/core";
 import { ExportCsv, ExportPdf } from "@material-table/exporters";
-import { Box } from "@mui/material";
-
+import React, { useEffect, useState } from "react";
 import { api } from "../services/api";
-
 import { createRowModel } from "../services/utils";
-
-import Tabs from "../components/Tabs";
-import { DialogContext } from "../contexts/dialogContext";
-import AnaliseForm from "../components/Forms/AnaliseForm";
-import BasicMenu from "../components/BasicMenu";
 
 const initialState: Column<any>[] = [
   { title: "ID", field: "id", hidden: true },
@@ -57,7 +48,6 @@ const initialState: Column<any>[] = [
 
 export default function DataGrid() {
   const [data, setData] = useState([]);
-  const { process, setProcess, getProcess } = useContext(DialogContext);
   const [columns, setColumns] = useState<Column<any>[]>(initialState);
 
   // Requisição GET para obter todos os dados cadastrados
@@ -103,125 +93,74 @@ export default function DataGrid() {
     }
   };
 
-  const handleVision = () => {
-    setColumns([
-      {
-        title: "Número do Processo",
-        field: "numeroProcesso",
-      },
-      { title: "Data de Protocolo do Pedido", field: "dataProtocoloPedido" },
-      {
-        title: "Porto Organizado",
-        field: "portoOrganizado",
-      },
-      { title: "Contrato de Arrendamento", field: "contratoArrendamento" },
-    ]);
-  };
-
-  const handleVision2 = () => {
-    setColumns(initialState);
-  };
-
   return (
-    <>
-      <div style={{ margin: 15, padding: 15, width: 1400 }}>
-        <MaterialTable
-          actions={[
-            // {
-            //   icon: "build",
-            //   tooltip: "Visualizar processo",
-            //   onClick: (event, rowData) => console.log(event, rowData),
-            // },
+    <div style={{ margin: 15, padding: 15, width: 1400 }}>
+      <MaterialTable
+        actions={[
+          {
+            icon: "visibility",
+            tooltip: "Visualizar processo",
+            onClick: (event, rowData) => console.log(event, rowData),
+          },
+        ]}
+        style={{ whiteSpace: "nowrap" }}
+        title="Tabela REIDI"
+        data={data}
+        columns={columns}
+        editable={{
+          onRowAdd: (newData) =>
+            handleRowAdd(newData).then(() => getProcesses()),
+          onRowUpdate: (newData, oldData) =>
+            handleRowUpdate(newData, oldData).then(() => getProcesses()),
+          onRowDelete: (oldData) =>
+            handleRowDelete(oldData).then(() => getProcesses()),
+        }}
+        options={{
+          search: true,
+          paging: true,
+          filtering: true,
+          grouping: true,
+          exportMenu: [
             {
-              icon: "visibility",
-              tooltip: "Visualizar processo",
-              onClick: (event, rowData) => console.log(event, rowData),
+              label: "Export PDF",
+              exportFunc: (cols, datas) => ExportPdf(cols, datas, ""),
             },
-          ]}
-          style={{ whiteSpace: "nowrap" }}
-          title="Tabela REIDI"
-          data={data}
-          columns={columns}
-          editable={{
-            onRowAdd: (newData) =>
-              handleRowAdd(newData).then(() => getProcesses()),
-            onRowUpdate: (newData, oldData) =>
-              handleRowUpdate(newData, oldData).then(() => getProcesses()),
-            onRowDelete: (oldData) =>
-              handleRowDelete(oldData).then(() => getProcesses()),
-          }}
-          options={{
-            search: true,
-            paging: true,
-            filtering: true,
-            grouping: true,
-            exportMenu: [
-              {
-                label: "Export PDF",
-                exportFunc: (cols, datas) => ExportPdf(cols, datas, ""),
-              },
-              {
-                label: "Export CSV",
-                exportFunc: (cols, datas) => ExportCsv(cols, datas, ""),
-              },
-            ],
-            sorting: true,
-            pageSize: 5,
-            pageSizeOptions: [5, 10, 15, 20, 25],
-            maxBodyHeight: 700,
-            minBodyHeight: 700,
-            overflowY: "scroll",
-          }}
-          localization={{
-            body: {
-              editRow: {
-                deleteText: "Tem certeza que deseja deletar esse registro?",
-              },
+            {
+              label: "Export CSV",
+              exportFunc: (cols, datas) => ExportCsv(cols, datas, ""),
             },
-            grouping: {
-              placeholder: "Arraste os cabeçalhos aqui para agrupar",
+          ],
+          sorting: true,
+          pageSize: 5,
+          pageSizeOptions: [5, 10, 15, 20, 25],
+          maxBodyHeight: 700,
+          minBodyHeight: 700,
+          overflowY: "scroll",
+        }}
+        localization={{
+          body: {
+            editRow: {
+              deleteText: "Tem certeza que deseja deletar esse registro?",
             },
-            header: {
-              actions: "Ações",
-            },
-            toolbar: {
-              searchPlaceholder: "Procurar",
-            },
-          }}
-          onRowClick={(event, rowData) =>
-            chrome.runtime.sendMessage({
-              action: "showREIDIDialog",
-              type: "edit",
-              numeroProcesso: rowData.numeroProcesso,
-            })
-          }
-          // cellEditable={{
-          //   cellStyle: {},
-          //   onCellEditApproved: (newValue, oldValue, rowData, columnDef) =>
-          //     new Promise((resolve, reject) => {
-          //       console.log(newValue, columnDef);
-          //       setTimeout(resolve, 4000);
-          //     }),
-          // }}
-          components={{
-            Toolbar: (props) => (
-              <>
-                <BasicMenu
-                  title="Mostrar colunas"
-                  menuItems={[{ title: "teste", onClick: () => { } }]}
-                />
-                {/* <MTableToolbar {...props} /> */}
-              </>
-            ),
-          }}
-        />
-      </div>
-      <Button variant="contained" onClick={handleVision}>
-        Visão compacta
-      </Button>
-      <Button variant="contained" onClick={handleVision2}>
-        Visão completa
-      </Button>
-    </>
+          },
+          grouping: {
+            placeholder: "Arraste os cabeçalhos aqui para agrupar",
+          },
+          header: {
+            actions: "Ações",
+          },
+          toolbar: {
+            searchPlaceholder: "Procurar",
+          },
+        }}
+        onRowClick={(event, rowData) =>
+          chrome.runtime.sendMessage({
+            action: "showREIDIDialog",
+            type: "edit",
+            numeroProcesso: rowData.numeroProcesso,
+          })
+        }
+      />
+    </div>
   );
 }
