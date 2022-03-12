@@ -1,0 +1,18 @@
+{
+  /* Poetic base style configuration */
+  "extends": "./node_modules/poetic/config/typescript/tsconfig.json",
+  /* Add your custom configuration after this */
+  "include": ["src/**/*"],
+
+  // https://webpack.js.org/guides/typescript/#basic-setup
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "target": "es5"
+  }
+}
