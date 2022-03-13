@@ -4,25 +4,25 @@ import { TextField, TextFieldProps } from '@mui/material';
 import React from 'react';
 
 export default function FormDatePicker({
-    label,
-    value,
-    onChange,
+  label,
+  value,
+  onChange,
 }: TextFieldProps | DatePickerProps) {
-    return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DatePicker
-                label={label}
-                value={value || null}
-                onChange={onChange}
-                renderInput={(params) => (
-                    <TextField
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        {...params}
-                    />
-                )}
-            />
-        </LocalizationProvider>
-    );
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePicker
+        label={label}
+        value={value || null}
+        onChange={onChange}
+        renderInput={(params) => (
+          <TextField
+            InputLabelProps={{
+              shrink: true,
+            }}
+            {...params}
+          />
+        )}
+      />
+    </LocalizationProvider>
+  );
 }

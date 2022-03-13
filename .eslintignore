@@ -1,0 +1,4 @@
+dist
+serviceWorker.*
+*.d.ts
+webpack.config.js

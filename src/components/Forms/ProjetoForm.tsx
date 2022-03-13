@@ -1,10 +1,8 @@
-import React, { useContext, FC } from "react";
-import { TextField, Grid, Autocomplete, InputAdornment } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
-import FormTextField from "../FormTextField";
-import { getPortos } from "../../services/apiV2";
-
-import { DialogContext } from "../../contexts/dialogContext";
+import { Autocomplete, Grid, InputAdornment, TextField } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import React, { useContext } from 'react';
+import { DialogContext } from '../../contexts/dialogContext';
+import FormTextField from '../FormTextField';
 
 interface AsyncAutocompleteProps {
   inputValue: string;
@@ -25,12 +23,7 @@ function sleep(delay = 0) {
   });
 }
 
-const AsyncAutocomplete: FC<AsyncAutocompleteProps> = ({
-  inputValue,
-  value,
-  onChange,
-  onInputChange,
-}) => {
+function AsyncAutocomplete({ inputValue, value, onChange, onInputChange }: AsyncAutocompleteProps) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly Porto[]>([]);
   const loading = open && options.length === 0;
@@ -46,8 +39,8 @@ const AsyncAutocomplete: FC<AsyncAutocompleteProps> = ({
       await sleep(1e3);
 
       if (active) {
-        const portos = await getPortos();
-        setOptions([...portos]);
+        // const portos = await getPortos();
+        // setOptions([...portos]);
       }
     })();
 
@@ -75,9 +68,7 @@ const AsyncAutocomplete: FC<AsyncAutocompleteProps> = ({
       }}
       inputValue={inputValue}
       onInputChange={onInputChange}
-      isOptionEqualToValue={(option, valueTest) =>
-        option.NOPorto === valueTest.NOPorto
-      }
+      isOptionEqualToValue={(option, valueTest) => option.NOPorto === valueTest.NOPorto}
       getOptionLabel={(option) => option.NOPorto}
       options={options}
       loading={loading}
@@ -93,9 +84,7 @@ const AsyncAutocomplete: FC<AsyncAutocompleteProps> = ({
             ...params.InputProps,
             endAdornment: (
               <>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
                 {params.InputProps.endAdornment}
               </>
             ),
@@ -104,9 +93,9 @@ const AsyncAutocomplete: FC<AsyncAutocompleteProps> = ({
       )}
     />
   );
-};
+}
 
-const ProjetoForm: React.FC = () => {
+export default function ProjetoForm() {
   const { process, setProcess } = useContext(DialogContext);
   const [value, setValue] = React.useState<string | null>();
   const [inputValue, setInputValue] = React.useState(process.portoOrganizado);
@@ -122,7 +111,7 @@ const ProjetoForm: React.FC = () => {
               portoOrganizado: newValue,
             });
           }}
-          inputValue={inputValue || ""}
+          inputValue={inputValue || ''}
           onInputChange={(event, newInputValue) => {
             setInputValue(newInputValue);
           }}
@@ -131,7 +120,7 @@ const ProjetoForm: React.FC = () => {
       <Grid item xs={4}>
         <FormTextField
           label="Contrato de Arrendamento"
-          value={process.contratoArrendamento || ""}
+          value={process.contratoArrendamento || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -143,7 +132,7 @@ const ProjetoForm: React.FC = () => {
       <Grid item xs={4}>
         <FormTextField
           label="Valor do Investimento Proposto"
-          value={process.valorInvestimentoProposto || ""}
+          value={process.valorInvestimentoProposto || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -151,16 +140,14 @@ const ProjetoForm: React.FC = () => {
             })
           }
           InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">R$</InputAdornment>
-            ),
+            startAdornment: <InputAdornment position="start">R$</InputAdornment>,
           }}
         />
       </Grid>
       <Grid item xs={12}>
         <FormTextField
           label="Arrendatário"
-          value={process.arrendatario || ""}
+          value={process.arrendatario || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -172,7 +159,7 @@ const ProjetoForm: React.FC = () => {
       <Grid item xs={4}>
         <FormTextField
           label="Perfil de carga"
-          value={process.perfilCarga || ""}
+          value={process.perfilCarga || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -185,7 +172,7 @@ const ProjetoForm: React.FC = () => {
         <FormTextField
           label="Tipo de Carga"
           multiline
-          value={process.tipoCarga || ""}
+          value={process.tipoCarga || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -198,7 +185,7 @@ const ProjetoForm: React.FC = () => {
         <FormTextField
           label="Objeto"
           multiline
-          value={process.objeto || ""}
+          value={process.objeto || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -211,7 +198,7 @@ const ProjetoForm: React.FC = () => {
         <FormTextField
           label="Observações"
           multiline
-          value={process.observacoes || ""}
+          value={process.observacoes || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -222,6 +209,4 @@ const ProjetoForm: React.FC = () => {
       </Grid>
     </Grid>
   );
-};
-
-export default ProjetoForm;
+}

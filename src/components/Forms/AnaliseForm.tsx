@@ -1,45 +1,37 @@
-import React, { useState, useContext } from "react";
 import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
   Radio,
   RadioGroup,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { DialogContext } from '../../contexts/dialogContext';
+import FormDatePicker from '../FormDatePicker';
+import FormTextField from '../FormTextField';
 
-// Estilo global
-import "../../styles/global.css";
-
-// Componentes
-import FormTextField from "../FormTextField";
-import FormDatePicker from "../FormDatePicker";
-
-import { DialogContext } from "../../contexts/dialogContext";
-
-const AnaliseForm: React.FC = () => {
+export default function AnaliseForm(): JSX.Element {
   const { process, setProcess } = useContext(DialogContext);
 
-  const [andamentoGPO, setAndamentoGPO] = useState("female");
+  const [andamentoGPO, setAndamentoGPO] = useState('female');
 
-  const handleRadioButtonChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleRadioButtonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAndamentoGPO((event.target as HTMLInputElement).value);
   };
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <Typography variant="caption" sx={{ fontSize: 24, color: "#1976d2" }}>
+        <Typography variant="caption" sx={{ fontSize: 24, color: '#1976d2' }}>
           GPO
         </Typography>
       </Grid>
       <Grid item xs={4}>
         <FormTextField
           label="Técnico"
-          value={process.tecnico || ""}
+          value={process.tecnico || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -52,7 +44,7 @@ const AnaliseForm: React.FC = () => {
         <FormTextField
           label="Análise da GPO"
           fullWidth
-          value={process.analiseGPO || ""}
+          value={process.analiseGPO || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -88,7 +80,7 @@ const AnaliseForm: React.FC = () => {
       <Grid item xs={4}>
         <FormTextField
           label="Prazo de Análise"
-          value={process.prazoAnalise || ""}
+          value={process.prazoAnalise || ''}
           disabled
           onChange={(e) =>
             setProcess({
@@ -108,34 +100,22 @@ const AnaliseForm: React.FC = () => {
             value={andamentoGPO}
             onChange={handleRadioButtonChange}
           >
-            <FormControlLabel
-              value="Pendente"
-              control={<Radio />}
-              label="Pendente"
-            />
-            <FormControlLabel
-              value="Em análise"
-              control={<Radio />}
-              label="Em análise"
-            />
-            <FormControlLabel
-              value="Finalizado"
-              control={<Radio />}
-              label="Finalizado"
-            />
+            <FormControlLabel value="Pendente" control={<Radio />} label="Pendente" />
+            <FormControlLabel value="Em análise" control={<Radio />} label="Em análise" />
+            <FormControlLabel value="Finalizado" control={<Radio />} label="Finalizado" />
             <FormControlLabel value="Outro" control={<Radio />} label="Outro" />
           </RadioGroup>
         </FormControl>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="caption" sx={{ fontSize: 24, color: "#1976d2" }}>
+        <Typography variant="caption" sx={{ fontSize: 24, color: '#1976d2' }}>
           Diretoria/SOG
         </Typography>
       </Grid>
       <Grid item xs={4}>
         <FormTextField
           label="Manifestação da ANTAQ"
-          value={process.manifestacaoANTAQ || ""}
+          value={process.manifestacaoANTAQ || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -149,7 +129,7 @@ const AnaliseForm: React.FC = () => {
         <FormTextField
           label="Deliberação da Diretoria"
           fullWidth
-          value={process.deliberacaoDiretoria || ""}
+          value={process.deliberacaoDiretoria || ''}
           onChange={(e) =>
             setProcess({
               ...process,
@@ -161,6 +141,4 @@ const AnaliseForm: React.FC = () => {
       </Grid>
     </Grid>
   );
-};
-
-export default AnaliseForm;
+}
