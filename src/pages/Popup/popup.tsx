@@ -69,6 +69,6 @@ export default function Popup() {
   );
 }
 
-// const root = document.createElement('div');
-// document.body.appendChild(root);
-// render(<Popup />, root);
+const root = document.createElement('div');
+document.body.appendChild(root);
+render(<Popup />, root);
