@@ -12,7 +12,7 @@ const processRowsCollection = Array.from(document.getElementsByClassName('infraT
 // Array contendo números e IDs de processos
 const processNumberCollection = Array.from(document.getElementsByClassName('infraCheckbox'));
 
-let REIDIButtons: Element[] = [];
+let REIDITableCells: Element[] = [];
 
 // Incorpora a família de fontes Roboto
 const addStylesheet = () => {
@@ -68,15 +68,15 @@ const addButtons = () => {
   // Adiciona um novo campo de dados na linha da tabela
   processRowsCollection.forEach((element) => {
     const td = document.createElement('td');
-    td.classList.add('REIDIButton');
+    td.classList.add('REIDITableCell');
     element.appendChild(td);
   });
 
-  REIDIButtons = Array.from(document.getElementsByClassName('REIDIButton'));
+  REIDITableCells = Array.from(document.getElementsByClassName('REIDITableCell'));
 };
 
 const addSkeleton = () => {
-  REIDIButtons.forEach((element) => {
+  REIDITableCells.forEach((element) => {
     ReactDOM.render(<Skeleton width={24} height={40} />, element);
   });
 };
@@ -86,13 +86,13 @@ const addClasses = () => {
   // Cada botão recebe o ID do procedimento como seu ID
   processNumberCollection.forEach((element, index) => {
     const idProcesso = element.getAttribute('value');
-    REIDIButtons[index].id = idProcesso;
+    REIDITableCells[index].id = idProcesso;
   });
 
   // Cada botão recebe o número do processo em sua classe
   processNumberCollection.forEach((element, index) => {
     const numeroProcesso = element.getAttribute('title');
-    REIDIButtons[index].classList.add(numeroProcesso);
+    REIDITableCells[index].classList.add(numeroProcesso);
   });
 };
 
@@ -102,19 +102,21 @@ const renderButtons = async () => {
     element.getAttribute('title'),
   );
 
-  const response = await matchRows(SEIProcessNumbers);
+  try {
+    const response = await matchRows(SEIProcessNumbers); 
 
-  // Renderiza os botões de adicionar/editar um REIDI vinculado ao processo
-  REIDIButtons.forEach((element) => {
+    // Renderiza os botões de adicionar/editar um REIDI vinculado ao processo
+    REIDITableCells.forEach((element) => {
     if (response.includes(element.classList[1])) {
       ReactDOM.render(<EditButton element={element} />, element);
       element.classList.add('editButton');
     } else {
       ReactDOM.render(<CreateButton element={element} />, element);
       element.classList.add('createButton');
-    }
-  });
-};
+    }})
+  } catch (error) {
+    console.error(error)
+}}
 
 const buttonsScript = async () => {
   addStylesheet();
@@ -131,14 +133,14 @@ buttonsScript();
 chrome.runtime.onMessage.addListener((request) => {
   if (request.action === 'showREIDI') {
     $('#REIDITh').fadeIn('slow');
-    $('.REIDIButton').fadeIn('slow');
+    $('.REIDITableCell').fadeIn('slow');
   }
 });
 
 chrome.runtime.onMessage.addListener((request) => {
   if (request.action === 'hideREIDI') {
     $('#REIDITh').fadeOut('slow');
-    $('.REIDIButton').fadeOut('slow');
+    $('.REIDITableCell').fadeOut('slow');
   }
 });
 

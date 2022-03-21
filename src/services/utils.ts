@@ -35,7 +35,6 @@ export const matchRows = async (rows: string[]) => {
     const result = rows.filter((item) => rowsProcessNumbers.includes(item));
     return result;
   } catch (error) {
-    console.error(error);
-    return [];
+     throw Error(error)
   }
 };
