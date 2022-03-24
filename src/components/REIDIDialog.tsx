@@ -94,14 +94,14 @@ export default function REIDIDialog({
           </Button>
         </Stack>
         <Divider />
-        {isLoading ? <LinearProgress /> : ''}
+        {isLoading ? <LinearProgress /> : null}
         <Tabs />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>CANCELAR</Button>
         <Button onClick={() => onClick(handleClose)}>{actionText}</Button>
-        {actionText === "EDITAR" ? (<Button onClick={() => handleDeleteProcess(handleClose)} color="error">EXCLUIR</Button>) : null} 
-        
+        {actionText === "EDITAR" ? (<Button onClick={() => handleDeleteProcess(handleClose)} color="error">EXCLUIR</Button>) : null}
+
       </DialogActions>
     </Dialog>
   );

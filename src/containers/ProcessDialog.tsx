@@ -46,6 +46,7 @@ export default function ProcessDialog({
       const value = createRowModel(process);
       await api.post('/spreadsheet', { value });
 
+      // Atualiza a lista de botões
       chrome.runtime.sendMessage({
         action: 'reloadREIDI',
       });
@@ -91,7 +92,13 @@ export default function ProcessDialog({
     const encodedProcessNumber = encodeURIComponent(numeroProcesso);
 
     try {
+      setLoading(true);
       await api.delete(`/row/${encodedProcessNumber}`)
+
+      chrome.runtime.sendMessage({
+        action: 'reloadREIDI',
+      });
+
       callback();
     } catch (error) {
       const message = `Falha ao deletar o processo n.º ${numeroProcesso} `;
