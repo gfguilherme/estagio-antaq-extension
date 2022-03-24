@@ -25,6 +25,7 @@ interface DialogProps {
   idProcedimento: string;
   numeroProcesso: string;
   handleDeleteProcess?: (callback) => void;
+  type: string;
 }
 
 export default function REIDIDialog({
@@ -36,7 +37,8 @@ export default function REIDIDialog({
   container,
   idProcedimento,
   numeroProcesso,
-  handleDeleteProcess
+  handleDeleteProcess,
+  type
 }: DialogProps) {
   // Desmonta o componente ao fechar o modal
   const handleClose = () => {
@@ -100,7 +102,7 @@ export default function REIDIDialog({
       <DialogActions>
         <Button onClick={handleClose}>CANCELAR</Button>
         <Button onClick={() => onClick(handleClose)}>{actionText}</Button>
-        {actionText === "EDITAR" ? (<Button onClick={() => handleDeleteProcess(handleClose)} color="error">EXCLUIR</Button>) : null}
+        {type === "edit" ? (<Button onClick={() => handleDeleteProcess(handleClose)} color="error">EXCLUIR</Button>) : null}
 
       </DialogActions>
     </Dialog>

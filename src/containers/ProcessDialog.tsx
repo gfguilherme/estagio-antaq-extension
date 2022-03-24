@@ -93,7 +93,7 @@ export default function ProcessDialog({
 
     try {
       setLoading(true);
-      await api.delete(`/row/${encodedProcessNumber}`)
+      await api.delete(`/row/${encodedProcessNumber}`);
 
       chrome.runtime.sendMessage({
         action: 'reloadREIDI',
@@ -107,7 +107,7 @@ export default function ProcessDialog({
       sendMessage(message, severity);
       callback();
     }
-  }
+  };
 
   // Define o número do processo
   useEffect(() => {
@@ -118,6 +118,7 @@ export default function ProcessDialog({
     <div>
       {type === 'create' ? (
         <REIDIDialog
+          type={type}
           actionText="CRIAR"
           onClick={handleCreateProcess}
           title="Criando REIDI para o processo n.º"
@@ -129,7 +130,8 @@ export default function ProcessDialog({
         />
       ) : (
         <REIDIDialog
-          actionText="EDITAR"
+          type={type}
+          actionText="SALVAR"
           onClick={handleProcessUpdate}
           handleDeleteProcess={handleDeleteProcess}
           title="Editando REIDI do processo n.º"
