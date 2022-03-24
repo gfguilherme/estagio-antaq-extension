@@ -86,6 +86,22 @@ export default function ProcessDialog({
     }
   };
 
+  // Apaga um processo
+  const handleDeleteProcess = async (callback) => {
+    const encodedProcessNumber = encodeURIComponent(numeroProcesso);
+
+    try {
+      await api.delete(`/row/${encodedProcessNumber}`)
+      callback();
+    } catch (error) {
+      const message = `Falha ao deletar o processo n.º ${numeroProcesso} `;
+      const severity = 'error';
+
+      sendMessage(message, severity);
+      callback();
+    }
+  }
+
   // Define o número do processo
   useEffect(() => {
     setProcess({ ...process, numeroProcesso });
@@ -108,6 +124,7 @@ export default function ProcessDialog({
         <REIDIDialog
           actionText="EDITAR"
           onClick={handleProcessUpdate}
+          handleDeleteProcess={handleDeleteProcess}
           title="Editando REIDI do processo n.º"
           isOpen
           isLoading={isLoading}
