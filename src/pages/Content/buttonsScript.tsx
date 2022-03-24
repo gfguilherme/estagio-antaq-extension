@@ -6,6 +6,7 @@ import AlertDialog from '../../components/Dialog';
 import EditButton from '../../components/EditButton';
 import { matchRows } from '../../services/utils';
 import renderForm from './dialogScript';
+import '../../styles/global.css'
 
 // Array contendo linhas da tabela
 const processRowsCollection = Array.from(document.getElementsByClassName('infraTrClara'));
