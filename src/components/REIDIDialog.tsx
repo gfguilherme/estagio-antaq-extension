@@ -16,6 +16,13 @@ import React, { useState } from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 import Tabs from './Tabs';
 
+interface ConfirmDeleteDialogProps {
+  handleCloseConfirmDeleteDialog: () => void;
+  handleCloseREIDIDialog: () => void;
+  handleDeleteProcess: (callback: any) => Promise<void>;
+  isOpen: boolean;
+}
+
 interface DialogProps {
   title: string;
   onClick: (callback) => void;
@@ -26,29 +33,35 @@ interface DialogProps {
   idProcedimento: string;
   numeroProcesso: string;
   handleDeleteProcess?: (callback) => void;
-  type: string;}
+  type: string;
+}
 
-export function ConfirmDeleteDialog({ isOpen, container, handleDeleteProcess, handleClose, handleClose2 }) {
-
-
+export function ConfirmDeleteDialog({
+  isOpen,
+  handleDeleteProcess,
+  handleCloseREIDIDialog,
+  handleCloseConfirmDeleteDialog,
+}: ConfirmDeleteDialogProps): JSX.Element {
   return (
     <Dialog
       id="delete-dialog"
       open={isOpen}
-      onClose={handleClose2}
+      onClose={handleCloseConfirmDeleteDialog}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Tem certeza que deseja deletar este processo?"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        Tem certeza que deseja deletar este processo?
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           Esse processo é irreversível.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose2}>Cancelar</Button>
-        <Button onClick={() => handleDeleteProcess(handleClose)} color='error'>
-          Confirmar 
+        <Button onClick={handleCloseConfirmDeleteDialog}>Cancelar</Button>
+        <Button onClick={() => handleDeleteProcess(handleCloseREIDIDialog)} color="error">
+          Confirmar
         </Button>
       </DialogActions>
     </Dialog>
@@ -66,7 +79,7 @@ export default function REIDIDialog({
   numeroProcesso,
   handleDeleteProcess,
   type,
-}: DialogProps) {
+}: DialogProps): JSX.Element {
   const [isConfirm, setIsConfirm] = useState<boolean>(false);
 
   const handleConfirmDelete = () => {
@@ -74,16 +87,16 @@ export default function REIDIDialog({
   };
 
   // Desmonta o componente ao fechar o modal
-  const handleClose = () => {
+  const handleCloseREIDIDialog = () => {
     unmountComponentAtNode(container);
   };
 
-  const handleClose2 = () => {
-    setIsConfirm(false)
+  const handleCloseConfirmDeleteDialog = () => {
+    setIsConfirm(false);
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose} fullWidth maxWidth="md">
+    <Dialog open={isOpen} onClose={handleCloseREIDIDialog} fullWidth maxWidth="md">
       <DialogTitle>
         {title}
         <Button
@@ -110,7 +123,6 @@ export default function REIDIDialog({
             Processo SEI
           </Button>
           <Button
-            // href={`${window.location.href.split('?')[0]}?acao=procedimento_trabalhar&id_procedimento=${idProcedimento}+'&id_documento=${param.id_documento}`}
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -121,7 +133,6 @@ export default function REIDIDialog({
             Requisição
           </Button>
           <Button
-            // href={`${window.location.href.split('?')[0]}?acao=procedimento_trabalhar&id_procedimento=${idProcedimento}+'&id_documento=${param.id_documento}`}
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -137,15 +148,21 @@ export default function REIDIDialog({
         <Tabs />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>CANCELAR</Button>
-        <Button onClick={() => onClick(handleClose)}>{actionText}</Button>
+        <Button onClick={handleCloseREIDIDialog}>CANCELAR</Button>
+        <Button onClick={() => onClick(handleCloseREIDIDialog)}>{actionText}</Button>
         {type === 'edit' ? (
           <Button onClick={() => handleConfirmDelete()} color="error">
             EXCLUIR
           </Button>
         ) : null}
       </DialogActions>
-      <ConfirmDeleteDialog isOpen={isConfirm} container={container} handleDeleteProcess={handleDeleteProcess} handleClose={handleClose} handleClose2={handleClose2}/>
+      <ConfirmDeleteDialog
+        isOpen={isConfirm}
+        container={container}
+        handleDeleteProcess={handleDeleteProcess}
+        handleCloseREIDIDialog={handleCloseREIDIDialog}
+        handleCloseConfirmDeleteDialog={handleCloseConfirmDeleteDialog}
+      />
     </Dialog>
   );
 }
