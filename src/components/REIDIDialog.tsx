@@ -60,7 +60,10 @@ export function ConfirmDeleteDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseConfirmDeleteDialog}>Cancelar</Button>
-        <Button onClick={() => handleDeleteProcess(handleCloseREIDIDialog)} color="error">
+        <Button onClick={() => {
+          handleCloseConfirmDeleteDialog()
+          handleDeleteProcess(handleCloseREIDIDialog)
+          }} color="error">
           Confirmar
         </Button>
       </DialogActions>
@@ -80,10 +83,10 @@ export default function REIDIDialog({
   handleDeleteProcess,
   type,
 }: DialogProps): JSX.Element {
-  const [isConfirm, setIsConfirm] = useState<boolean>(false);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
   const handleConfirmDelete = () => {
-    setIsConfirm(true);
+    setDeleteDialogOpen(true);
   };
 
   // Desmonta o componente ao fechar o modal
@@ -92,7 +95,7 @@ export default function REIDIDialog({
   };
 
   const handleCloseConfirmDeleteDialog = () => {
-    setIsConfirm(false);
+    setDeleteDialogOpen(false);
   };
 
   return (
@@ -157,7 +160,7 @@ export default function REIDIDialog({
         ) : null}
       </DialogActions>
       <ConfirmDeleteDialog
-        isOpen={isConfirm}
+        isOpen={isDeleteDialogOpen}
         container={container}
         handleDeleteProcess={handleDeleteProcess}
         handleCloseREIDIDialog={handleCloseREIDIDialog}
