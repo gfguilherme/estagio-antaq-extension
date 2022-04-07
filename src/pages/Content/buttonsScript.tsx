@@ -104,11 +104,12 @@ const renderButtons = async () => {
   );
 
   try {
-    const response = await matchRows(SEIProcessNumbers); 
+    //Interseção da lista de processos do SEI e da tabela REIDI
+    const intersectionProcessesNumber = await matchRows(SEIProcessNumbers); 
 
     // Renderiza os botões de adicionar/editar um REIDI vinculado ao processo
     REIDITableCells.forEach((element) => {
-    if (response.includes(element.classList[1])) {
+    if (intersectionProcessesNumber.includes(element.classList[1])) {
       ReactDOM.render(<EditButton element={element} />, element);
       element.classList.add('editButton');
     } else {
