@@ -1,5 +1,5 @@
 import { Process } from '../contexts/dialogContext';
-import { api } from './api';
+import { apiDB } from './api';
 
 // Retorna um objeto JSON correspondente a linha da planilha.
 export const createRowModel = (row: Process) => {
@@ -28,12 +28,14 @@ export const createRowModel = (row: Process) => {
   return value;
 };
 
-export const matchRows = async (rows: string[]) => {
+export const matchRows = async (SEIProcessNumbers: string[]) => {
   try {
-    const response = await api.get(`/match-rows`);
-    const { rowsProcessNumbers } = response.data;
+    const response = await apiDB.get('/match-rows');
 
-    const result = rows.filter((item) => rowsProcessNumbers.includes(item));
+    const NRProcessoPrincipalArray = response.data.map((element) => element.NRProcessoPrincipal);
+
+    const result = SEIProcessNumbers.filter((item) => NRProcessoPrincipalArray.includes(item));
+
     return result;
   } catch (error) {
     throw Error(error);

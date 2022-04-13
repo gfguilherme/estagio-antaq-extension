@@ -5,8 +5,8 @@ import CreateButton from '../../components/CreateButton';
 import AlertDialog from '../../components/Dialog';
 import EditButton from '../../components/EditButton';
 import { matchRows } from '../../services/utils';
-import renderForm from './dialogScript';
 import '../../styles/global.css';
+import renderForm from './dialogScript';
 
 // Array contendo linhas da tabela
 const processRowsCollection = Array.from(
