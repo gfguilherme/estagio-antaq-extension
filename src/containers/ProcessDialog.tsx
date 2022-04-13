@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import REIDIDialog, { ConfirmDeleteDialog } from '../components/REIDIDialog';
 import { DialogContext } from '../contexts/dialogContext';
-import { api } from '../services/api';
+import { api, apiDB } from '../services/api';
 import { createRowModel } from '../services/utils';
 
 interface ProcessDialogProps {
@@ -43,8 +43,16 @@ export default function ProcessDialog({
   const handleCreateProcess = async (callback) => {
     try {
       setLoading(true);
-      const value = createRowModel(process);
-      await api.post('/spreadsheet', { value });
+      await apiDB.post('/controlereidi', {
+        IDContratoArrendamento: process.IDContratoArrendamento,
+        NRProcessoPrincipal: numeroProcesso,
+        IDProtocoloSEI: idProcedimento,
+        DTProtocoloPedido: process.dataProtocoloPedido,
+        VLInvestimentoProposto: process.valorInvestimentoProposto,
+        DSObservacoesSituacao: process.observacoes,
+        NRProtocoloMINFRA: process.protocoloMInfra,
+        NRCodigoMINFRA: process.codigoMInfra,
+      });
 
       // Atualiza a lista de botões
       chrome.runtime.sendMessage({

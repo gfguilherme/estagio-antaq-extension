@@ -31,6 +31,8 @@ export default function ProjetoForm(): JSX.Element {
   const handleGetContratosOptions = async (CDTriGrama: string) => {
     try {
       const response = await apiDB.get(`contratoarrendamento/${CDTriGrama}`);
+      setProcess({...process, IDContratoArrendamento: response.data.IDContratoArrendamento})
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -83,7 +85,7 @@ export default function ProjetoForm(): JSX.Element {
           onChange={(e) =>
             setProcess({
               ...process,
-              valorInvestimentoProposto: e.target.value,
+              valorInvestimentoProposto: parseInt(e.target.value),
             })
           }
           InputProps={{
