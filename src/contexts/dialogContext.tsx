@@ -7,6 +7,7 @@ export interface Process {
   andamentoGPO: string;
   arrendatario: string;
   codigoMInfra: string;
+  IDContratoArrendamento: number | null;
   contratoArrendamento: string;
   dataProtocoloPedido: Date | string;
   deliberacaoDiretoria: string;
@@ -25,7 +26,7 @@ export interface Process {
   tecnico: string;
   terminoAnaliseGPO: Date | string;
   tipoCarga: string;
-  valorInvestimentoProposto: string;
+  valorInvestimentoProposto: number;
 }
 
 const initialProcess: Process = {
@@ -33,6 +34,7 @@ const initialProcess: Process = {
   andamentoGPO: '',
   arrendatario: '',
   codigoMInfra: '',
+  IDContratoArrendamento: null,
   contratoArrendamento: '',
   dataProtocoloPedido: '',
   deliberacaoDiretoria: '',
@@ -51,7 +53,7 @@ const initialProcess: Process = {
   tecnico: '',
   terminoAnaliseGPO: '',
   tipoCarga: '',
-  valorInvestimentoProposto: '',
+  valorInvestimentoProposto: 0,
 };
 
 type ProcessContextType = {
