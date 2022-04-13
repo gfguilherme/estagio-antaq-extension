@@ -8,9 +8,11 @@ export default function FormTextField({
   helperText,
   InputProps,
   multiline,
+  disabled
 }: TextFieldProps) {
   return (
     <TextField
+      disabled={disabled}
       label={label}
       value={value || ''}
       onChange={onChange}

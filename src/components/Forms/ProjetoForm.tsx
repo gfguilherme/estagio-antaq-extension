@@ -1,132 +1,71 @@
-import { Autocomplete, Grid, InputAdornment, TextField } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import React, { useContext } from 'react';
+import { Grid, InputAdornment } from '@mui/material';
+import React, { useContext, useState } from 'react';
 import { DialogContext } from '../../contexts/dialogContext';
+import { apiDB } from '../../services/api';
+import { AsynchronousAutocomplete } from '../AsynchronousAutocomplete';
 import FormTextField from '../FormTextField';
 
-interface AsyncAutocompleteProps {
-  inputValue: string;
-  value: string;
-  onChange: (event: any, newValue: string | null) => void;
-  onInputChange: (event: any, newInputValue: any) => void;
-}
-
-interface Porto {
+interface IPorto {
   CDBiGrama: string;
   CDTriGrama: string;
   NOPorto: string;
 }
 
-function sleep(delay = 0) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
-
-function AsyncAutocomplete({ inputValue, value, onChange, onInputChange }: AsyncAutocompleteProps) {
-  const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState<readonly Porto[]>([]);
-  const loading = open && options.length === 0;
-
-  React.useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      await sleep(1e3);
-
-      if (active) {
-        // const portos = await getPortos();
-        // setOptions([...portos]);
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
-
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
-    }
-  }, [open]);
-
-  return (
-    <Autocomplete
-      value={value}
-      onChange={onChange}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      inputValue={inputValue}
-      onInputChange={onInputChange}
-      isOptionEqualToValue={(option, valueTest) => option.NOPorto === valueTest.NOPorto}
-      getOptionLabel={(option) => option.NOPorto}
-      options={options}
-      loading={loading}
-      loadingText="Carregando"
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Porto Organizado"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </>
-            ),
-          }}
-        />
-      )}
-    />
-  );
-}
-
-export default function ProjetoForm() {
+export default function ProjetoForm(): JSX.Element {
   const { process, setProcess } = useContext(DialogContext);
-  const [value, setValue] = React.useState<string | null>();
-  const [inputValue, setInputValue] = React.useState(process.portoOrganizado);
+  const [portoValue, setPortoValue] = useState<IPorto | null>(null);
+  const [contratoArrendamentoValue, setContratoArrendamentoValue] = useState<string | null>(
+    null,
+  );
+  const [isDisabled, setDisabled] = useState(true);
+
+  const handleGetPortosOptions = async () => {
+    try {
+      const response = await apiDB.get('portos');
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetContratosOptions = async (CDTriGrama: string) => {
+    try {
+      const response = await apiDB.get(`contratoarrendamento/${CDTriGrama}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePortoChange = (event: React.SyntheticEvent<Element, Event>, newValue: IPorto | null): void => {
+    setPortoValue(newValue);
+    setContratoArrendamentoValue(null);
+    setDisabled(false);
+  };
+
+  const handleContratoArrendamentoChange = (event: any, newValue: string | null) => {
+    setContratoArrendamentoValue(newValue);
+  };
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={4}>
-        <AsyncAutocomplete
-          value={value}
-          onChange={(event: any, newValue: string | null) => {
-            setProcess({
-              ...process,
-              portoOrganizado: newValue,
-            });
-          }}
-          inputValue={inputValue || ''}
-          onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
-          }}
+        <AsynchronousAutocomplete
+          value={portoValue}
+          onChange={handlePortoChange}
+          handleGetOptions={() => handleGetPortosOptions()}
+          optionLabel="NOPorto"
+          label="Portos"
         />
       </Grid>
       <Grid item xs={4}>
-        <FormTextField
-          label="Contrato de Arrendamento"
-          value={process.contratoArrendamento || ''}
-          onChange={(e) =>
-            setProcess({
-              ...process,
-              contratoArrendamento: e.target.value,
-            })
-          }
+        <AsynchronousAutocomplete
+          value={contratoArrendamentoValue}
+          onChange={handleContratoArrendamentoChange}
+          handleGetOptions={() => handleGetContratosOptions(portoValue.CDTriGrama)}
+          optionLabel="CDContrato"
+          label="Contrato"
+          disabled={isDisabled}
         />
       </Grid>
       <Grid item xs={4}>
@@ -146,7 +85,8 @@ export default function ProjetoForm() {
       </Grid>
       <Grid item xs={12}>
         <FormTextField
-          label="Arrendatário"
+          disabled
+          label="Empresa"
           value={process.arrendatario || ''}
           onChange={(e) =>
             setProcess({
@@ -158,6 +98,7 @@ export default function ProjetoForm() {
       </Grid>
       <Grid item xs={4}>
         <FormTextField
+          disabled
           label="Perfil de carga"
           value={process.perfilCarga || ''}
           onChange={(e) =>
@@ -170,6 +111,7 @@ export default function ProjetoForm() {
       </Grid>
       <Grid item xs={8}>
         <FormTextField
+          disabled
           label="Tipo de Carga"
           multiline
           value={process.tipoCarga || ''}
@@ -183,6 +125,7 @@ export default function ProjetoForm() {
       </Grid>
       <Grid item xs={12}>
         <FormTextField
+          disabled
           label="Objeto"
           multiline
           value={process.objeto || ''}
@@ -196,6 +139,7 @@ export default function ProjetoForm() {
       </Grid>
       <Grid item xs={12}>
         <FormTextField
+          disabled
           label="Observações"
           multiline
           value={process.observacoes || ''}
