@@ -15,5 +15,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'warn',
     'import/no-extraneous-dependencies': 'off',
+    "react/require-default-props": 'off',
+    "import/prefer-default-export": "off",
   },
 };
