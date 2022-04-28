@@ -17,7 +17,9 @@ export default function AnaliseForm(): JSX.Element {
 
   const [andamentoGPO, setAndamentoGPO] = useState('female');
 
-  const handleRadioButtonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadioButtonChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setAndamentoGPO((event.target as HTMLInputElement).value);
   };
 
@@ -100,9 +102,21 @@ export default function AnaliseForm(): JSX.Element {
             value={andamentoGPO}
             onChange={handleRadioButtonChange}
           >
-            <FormControlLabel value="Pendente" control={<Radio />} label="Pendente" />
-            <FormControlLabel value="Em análise" control={<Radio />} label="Em análise" />
-            <FormControlLabel value="Finalizado" control={<Radio />} label="Finalizado" />
+            <FormControlLabel
+              value="Pendente"
+              control={<Radio />}
+              label="Pendente"
+            />
+            <FormControlLabel
+              value="Em análise"
+              control={<Radio />}
+              label="Em análise"
+            />
+            <FormControlLabel
+              value="Finalizado"
+              control={<Radio />}
+              label="Finalizado"
+            />
             <FormControlLabel value="Outro" control={<Radio />} label="Outro" />
           </RadioGroup>
         </FormControl>

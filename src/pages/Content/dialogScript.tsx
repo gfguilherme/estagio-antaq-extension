@@ -21,10 +21,13 @@ const renderForm = () => {
             container={root}
           />
         </DialogProvider>,
-        root,
+        root
       );
     } else if (request.action === 'showAuctionDialog') {
-      ReactDOM.render(<DialogPlaceholder numeroProcesso={numeroProcesso} />, root);
+      ReactDOM.render(
+        <DialogPlaceholder numeroProcesso={numeroProcesso} />,
+        root
+      );
     }
   });
 };

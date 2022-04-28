@@ -8,8 +8,13 @@ document.body.appendChild(snackbarDiv);
 
 const renderSnackbar = (message, severity) => {
   ReactDOM.render(
-    <StatusSnackbar isOpen message={message} severity={severity} container={snackbarDiv} />,
-    snackbarDiv,
+    <StatusSnackbar
+      isOpen
+      message={message}
+      severity={severity}
+      container={snackbarDiv}
+    />,
+    snackbarDiv
   );
 };
 

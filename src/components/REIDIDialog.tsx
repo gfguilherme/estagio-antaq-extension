@@ -60,10 +60,13 @@ export function ConfirmDeleteDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseConfirmDeleteDialog}>Cancelar</Button>
-        <Button onClick={() => {
-          handleCloseConfirmDeleteDialog()
-          handleDeleteProcess(handleCloseREIDIDialog)
-          }} color="error">
+        <Button
+          onClick={() => {
+            handleCloseConfirmDeleteDialog();
+            handleDeleteProcess(handleCloseREIDIDialog);
+          }}
+          color="error"
+        >
           Confirmar
         </Button>
       </DialogActions>
@@ -99,7 +102,12 @@ export default function REIDIDialog({
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleCloseREIDIDialog} fullWidth maxWidth="md">
+    <Dialog
+      open={isOpen}
+      onClose={handleCloseREIDIDialog}
+      fullWidth
+      maxWidth="md"
+    >
       <DialogTitle>
         {title}
         <Button
@@ -152,7 +160,9 @@ export default function REIDIDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseREIDIDialog}>CANCELAR</Button>
-        <Button onClick={() => onClick(handleCloseREIDIDialog)}>{actionText}</Button>
+        <Button onClick={() => onClick(handleCloseREIDIDialog)}>
+          {actionText}
+        </Button>
         {type === 'edit' ? (
           <Button onClick={() => handleConfirmDelete()} color="error">
             EXCLUIR

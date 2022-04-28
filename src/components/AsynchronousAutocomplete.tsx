@@ -13,7 +13,10 @@ interface AsynchronousAutocompleteProps<T> {
   disabled?: boolean;
   handleGetOptions: () => Promise<T[]>;
   label: string;
-  onChange: (event: React.SyntheticEvent<Element, Event>, newValue: T | null) => void;
+  onChange: (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: T | null
+  ) => void;
   optionLabel: string;
   value: T | null | undefined;
 }
@@ -79,7 +82,9 @@ export function AsynchronousAutocomplete<T>({
       onClose={() => {
         setOpen(false);
       }}
-      isOptionEqualToValue={(option, value) => option[optionLabel] === value[optionLabel]}
+      isOptionEqualToValue={(option, value) =>
+        option[optionLabel] === value[optionLabel]
+      }
       getOptionLabel={(option) => option[optionLabel]}
       options={options}
       loading={loading}
@@ -96,7 +101,9 @@ export function AsynchronousAutocomplete<T>({
             ...params.InputProps,
             endAdornment: (
               <>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
                 {params.InputProps.endAdornment}
               </>
             ),

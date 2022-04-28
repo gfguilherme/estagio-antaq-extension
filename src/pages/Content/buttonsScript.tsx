@@ -6,12 +6,16 @@ import AlertDialog from '../../components/Dialog';
 import EditButton from '../../components/EditButton';
 import { matchRows } from '../../services/utils';
 import renderForm from './dialogScript';
-import '../../styles/global.css'
+import '../../styles/global.css';
 
 // Array contendo linhas da tabela
-const processRowsCollection = Array.from(document.getElementsByClassName('infraTrClara'));
+const processRowsCollection = Array.from(
+  document.getElementsByClassName('infraTrClara')
+);
 // Array contendo números e IDs de processos
-const processNumberCollection = Array.from(document.getElementsByClassName('infraCheckbox'));
+const processNumberCollection = Array.from(
+  document.getElementsByClassName('infraCheckbox')
+);
 
 let REIDITableCells: Element[] = [];
 
@@ -19,17 +23,22 @@ let REIDITableCells: Element[] = [];
 const addStylesheet = () => {
   const robotoFont: HTMLLinkElement = document.createElement('link');
   robotoFont.rel = 'stylesheet';
-  robotoFont.href = 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap';
+  robotoFont.href =
+    'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap';
   document.head.appendChild(robotoFont);
 };
 
 // Adiciona REIDI como um cabeçalho da tabela
 const addTableHeader = () => {
-  const tblProcessosRecebidos = document.getElementById('tblProcessosRecebidos');
+  const tblProcessosRecebidos = document.getElementById(
+    'tblProcessosRecebidos'
+  );
   const tblProcessosGerados = document.getElementById('tblProcessosGerados');
   const tblProcessosGeradosIsNull = tblProcessosGerados === null;
 
-  const trProcessosRecebidos = tblProcessosRecebidos.children.item(1).children.item(0);
+  const trProcessosRecebidos = tblProcessosRecebidos.children
+    .item(1)
+    .children.item(0);
 
   const th = document.createElement('th');
   th.classList.add('tituloControle');
@@ -45,7 +54,9 @@ const addTableHeader = () => {
 
   // Inclui header apenas se a tabela de processos gerados existir
   if (!tblProcessosGeradosIsNull) {
-    const trProcessosGerados = tblProcessosGerados.children.item(1).children.item(0);
+    const trProcessosGerados = tblProcessosGerados.children
+      .item(1)
+      .children.item(0);
 
     trProcessosGerados.append(th2);
   }
@@ -61,7 +72,7 @@ const addButtons = () => {
 
   const container = document.body.appendChild(document.createElement('div'));
   newDocButton.addEventListener('click', () =>
-    render(<AlertDialog container={container} />, container),
+    render(<AlertDialog container={container} />, container)
   );
 
   divComandos.append(newDocButton);
@@ -73,7 +84,9 @@ const addButtons = () => {
     element.appendChild(td);
   });
 
-  REIDITableCells = Array.from(document.getElementsByClassName('REIDITableCell'));
+  REIDITableCells = Array.from(
+    document.getElementsByClassName('REIDITableCell')
+  );
 };
 
 const addSkeleton = () => {
@@ -100,25 +113,27 @@ const addClasses = () => {
 const renderButtons = async () => {
   //  Coleção de número de processos do SEI
   const SEIProcessNumbers: string[] = processNumberCollection.map((element) =>
-    element.getAttribute('title'),
+    element.getAttribute('title')
   );
 
   try {
     //Interseção da lista de processos do SEI e da tabela REIDI
-    const intersectionProcessesNumber = await matchRows(SEIProcessNumbers); 
+    const intersectionProcessesNumber = await matchRows(SEIProcessNumbers);
 
     // Renderiza os botões de adicionar/editar um REIDI vinculado ao processo
     REIDITableCells.forEach((element) => {
-    if (intersectionProcessesNumber.includes(element.classList[1])) {
-      ReactDOM.render(<EditButton element={element} />, element);
-      element.classList.add('editButton');
-    } else {
-      ReactDOM.render(<CreateButton element={element} />, element);
-      element.classList.add('createButton');
-    }})
+      if (intersectionProcessesNumber.includes(element.classList[1])) {
+        ReactDOM.render(<EditButton element={element} />, element);
+        element.classList.add('editButton');
+      } else {
+        ReactDOM.render(<CreateButton element={element} />, element);
+        element.classList.add('createButton');
+      }
+    });
   } catch (error) {
-    console.error(error)
-}}
+    console.error(error);
+  }
+};
 
 const buttonsScript = async () => {
   addStylesheet();

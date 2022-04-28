@@ -14,7 +14,9 @@ interface DialogPlaceholderProps {
   numeroProcesso: string;
 }
 
-export default function DialogPlaceholder({ numeroProcesso }: DialogPlaceholderProps) {
+export default function DialogPlaceholder({
+  numeroProcesso,
+}: DialogPlaceholderProps) {
   const [open, setOpen] = React.useState(true);
 
   const handleClose = () => {

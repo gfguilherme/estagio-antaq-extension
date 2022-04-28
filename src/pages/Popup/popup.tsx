@@ -45,7 +45,11 @@ export default function Popup() {
     >
       <ListItem>
         <ListItemIcon>
-          {checked.includes('reidi') ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          {checked.includes('reidi') ? (
+            <VisibilityIcon />
+          ) : (
+            <VisibilityOffIcon />
+          )}
         </ListItemIcon>
         <ListItemText primary={<b>REIDI</b>} />
         <Switch

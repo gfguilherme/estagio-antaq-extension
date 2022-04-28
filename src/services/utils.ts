@@ -22,7 +22,8 @@ export const createRowModel = (row: Process) => {
     'Prazo de Análise': row.prazoAnalise,
     SITUAÇÃO: row.situacao,
     'Manifestação da ANTAQ (Diretoria/SOG)': row.manifestacaoANTAQ,
-    'Deliberação da diretoria (e/ou declaração técnica SOG)': row.deliberacaoDiretoria,
+    'Deliberação da diretoria (e/ou declaração técnica SOG)':
+      row.deliberacaoDiretoria,
   };
   return value;
 };
@@ -35,6 +36,6 @@ export const matchRows = async (rows: string[]) => {
     const result = rows.filter((item) => rowsProcessNumbers.includes(item));
     return result;
   } catch (error) {
-     throw Error(error)
+    throw Error(error);
   }
 };
