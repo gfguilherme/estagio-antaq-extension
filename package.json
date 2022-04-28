@@ -5,11 +5,7 @@
   "scripts": {
     "start": "webpack --watch --env development",
     "build": "webpack --watch --env production",
-    "code:check": "yarn code:lint; yarn code:format --check",
-    "code:clean": "yarn code:lint --fix; yarn code:format --write",
-    "code:lint": "eslint --ext .js,.jsx,.ts,.tsx \"src/\"",
-    "code:format": "prettier './src/**/**.{js,jsx,ts,tsx}'",
-    "code:check:rules": "npx eslint-config-prettier .eslintrc.js"
+    "code:format": "prettier -w './src/**/**'"
   },
   "author": "Guilherme Gonçalves Ferreira",
   "devDependencies": {
@@ -27,8 +23,7 @@
     "css-loader": "^5.0.1",
     "html-webpack-plugin": "^5.5.0",
     "jquery": "^3.6.0",
-    "poetic": "^1.7.0",
-    "prettier": "^2.5.1",
+    "prettier": "^2.6.2",
     "source-map-loader": "^3.0.1",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
