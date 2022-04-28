@@ -14,9 +14,9 @@ interface IPorto {
 export default function ProjetoForm(): JSX.Element {
   const { process, setProcess } = useContext(DialogContext);
   const [portoValue, setPortoValue] = useState<IPorto | null>(null);
-  const [contratoArrendamentoValue, setContratoArrendamentoValue] = useState<string | null>(
-    null,
-  );
+  const [contratoArrendamentoValue, setContratoArrendamentoValue] = useState<
+    string | null
+  >(null);
   const [isDisabled, setDisabled] = useState(true);
 
   const handleGetPortosOptions = async () => {
@@ -37,13 +37,19 @@ export default function ProjetoForm(): JSX.Element {
     }
   };
 
-  const handlePortoChange = (event: React.SyntheticEvent<Element, Event>, newValue: IPorto | null): void => {
+  const handlePortoChange = (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: IPorto | null
+  ): void => {
     setPortoValue(newValue);
     setContratoArrendamentoValue(null);
     setDisabled(false);
   };
 
-  const handleContratoArrendamentoChange = (event: any, newValue: string | null) => {
+  const handleContratoArrendamentoChange = (
+    event: any,
+    newValue: string | null
+  ) => {
     setContratoArrendamentoValue(newValue);
   };
 
@@ -62,7 +68,9 @@ export default function ProjetoForm(): JSX.Element {
         <AsynchronousAutocomplete
           value={contratoArrendamentoValue}
           onChange={handleContratoArrendamentoChange}
-          handleGetOptions={() => handleGetContratosOptions(portoValue.CDTriGrama)}
+          handleGetOptions={() =>
+            handleGetContratosOptions(portoValue.CDTriGrama)
+          }
           optionLabel="CDContrato"
           label="Contrato"
           disabled={isDisabled}
@@ -79,7 +87,9 @@ export default function ProjetoForm(): JSX.Element {
             })
           }
           InputProps={{
-            startAdornment: <InputAdornment position="start">R$</InputAdornment>,
+            startAdornment: (
+              <InputAdornment position="start">R$</InputAdornment>
+            ),
           }}
         />
       </Grid>

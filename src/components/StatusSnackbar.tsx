@@ -39,7 +39,11 @@ export default function StatusSnackbar({
           autoHideDuration={6000}
           onClose={handleClose}
         >
-          <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          <Alert
+            onClose={handleClose}
+            severity={severity}
+            sx={{ width: '100%' }}
+          >
             {message}
           </Alert>
         </Snackbar>

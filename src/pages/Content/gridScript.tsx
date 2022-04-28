@@ -33,7 +33,7 @@ a.addEventListener('click', () => {
     <DialogProvider>
       <DataGrid />
     </DialogProvider>,
-    screen,
+    screen
   );
 
   document.getElementById('divInfraAreaTelaE').style.width = '19%';

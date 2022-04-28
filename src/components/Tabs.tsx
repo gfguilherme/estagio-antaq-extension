@@ -45,7 +45,12 @@ export default function BasicTabs() {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          centered
+        >
           <Tab label="Processo" {...a11yProps(0)} />
           <Tab label="Projeto" {...a11yProps(1)} />
           <Tab label="Análise" {...a11yProps(2)} />

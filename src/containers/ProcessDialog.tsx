@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import REIDIDialog, {ConfirmDeleteDialog} from '../components/REIDIDialog';
+import REIDIDialog, { ConfirmDeleteDialog } from '../components/REIDIDialog';
 import { DialogContext } from '../contexts/dialogContext';
 import { api } from '../services/api';
 import { createRowModel } from '../services/utils';
@@ -94,7 +94,7 @@ export default function ProcessDialog({
     try {
       setLoading(true);
       await api.delete(`/row/${encodedProcessNumber}`);
-      
+
       const message = `Sucesso ao deletar o processo n.º ${numeroProcesso} `;
       const severity = 'success';
 
@@ -134,7 +134,6 @@ export default function ProcessDialog({
           numeroProcesso={numeroProcesso}
         />
       ) : (
-
         <REIDIDialog
           type={type}
           actionText="SALVAR"
@@ -147,7 +146,6 @@ export default function ProcessDialog({
           idProcedimento={idProcedimento}
           numeroProcesso={numeroProcesso}
         />
- 
       )}
     </div>
   );

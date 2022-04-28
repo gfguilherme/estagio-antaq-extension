@@ -114,7 +114,8 @@ export default function DataGrid(): JSX.Element {
         editable={{
           onRowAdd: (newData) => handleRowAdd(newData).then(getProcesses),
           onRowDelete: (oldData) => handleRowDelete(oldData).then(getProcesses),
-          onRowUpdate: (newData, oldData) => handleRowUpdate(newData, oldData).then(getProcesses),
+          onRowUpdate: (newData, oldData) =>
+            handleRowUpdate(newData, oldData).then(getProcesses),
         }}
         localization={{
           body: {
