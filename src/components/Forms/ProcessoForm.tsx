@@ -47,13 +47,13 @@ export default function ProcessoForm() {
       </Grid>
       <Grid item xs={8}>
         <FormTextField
-          label="Situação"
+          label="Observação e situação"
           multiline
-          value={process.situacao || ''}
+          value={process.DSObservacoesSituacao || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              situacao: e.target.value,
+              DSObservacoesSituacao: e.target.value,
             })
           }
         />

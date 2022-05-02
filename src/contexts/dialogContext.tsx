@@ -5,11 +5,11 @@ import { apiDB } from '../services/api';
 export interface Process {
   DSTituloAnaliseREIDI: string; //
   IDEstadoAnaliseREIDI: number; //
-  arrendatario: string;
+  NOFantasiaEmpresa: string; //
   NRCodigoMINFRA: string | null; //
   IDContratoArrendamento: number | null; //
   contratoArrendamento: string; 
-  DTProtocoloPedido: Date | string; //
+  DTProtocoloPedido: Date; //
   DSTituloManifestacaoANTAQ: string; //
   DTInicioAnaliseREIDI: Date | string; //
   DSEstadoManifestacaoANTAQ: string; //
@@ -22,22 +22,21 @@ export interface Process {
   prazoAnalise: string;
   NRProtocoloMINFRA: string; //
   rowNumber: string;
-  DSObservacoesSituacao: string;
+  DSObservacoesSituacao: string; //
   tecnico: string; 
   DTFimAnaliseREIDI: Date | string; //
   tipoCarga: string;
-  VLInvestimentoProposto //
-  : number;
+  VLInvestimentoProposto: number; //
 }
 
 const initialProcess: Process = {
   DSTituloAnaliseREIDI: '', //
   IDEstadoAnaliseREIDI: 1 , //
-  arrendatario: '',
+  NOFantasiaEmpresa: '',
   NRCodigoMINFRA: '', //
   IDContratoArrendamento: null, //
   contratoArrendamento: '', 
-  DTProtocoloPedido: '', //
+  DTProtocoloPedido: Date.now(), //
   DSTituloManifestacaoANTAQ: '', // 
   DTInicioAnaliseREIDI: '', //
   DSEstadoManifestacaoANTAQ: '', //
@@ -50,7 +49,7 @@ const initialProcess: Process = {
   prazoAnalise: '',
   NRProtocoloMINFRA: '', //
   rowNumber: '',
-  DSObservacoesSituacao: '',
+  DSObservacoesSituacao: '', //
   tecnico: '',
   DTFimAnaliseREIDI: '', //
   tipoCarga: '',

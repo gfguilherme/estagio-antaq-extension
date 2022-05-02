@@ -99,11 +99,11 @@ export default function ProjetoForm(): JSX.Element {
         <FormTextField
           disabled
           label="Empresa"
-          value={process.arrendatario || ''}
+          value={process.NOFantasiaEmpresa || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              arrendatario: e.target.value,
+              NOFantasiaEmpresa: e.target.value,
             })
           }
         />
@@ -145,20 +145,6 @@ export default function ProjetoForm(): JSX.Element {
             setProcess({
               ...process,
               objeto: e.target.value,
-            })
-          }
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <FormTextField
-          disabled
-          label="Observações"
-          multiline
-          value={process.observacoes || ''}
-          onChange={(e) =>
-            setProcess({
-              ...process,
-              observacoes: e.target.value,
             })
           }
         />
