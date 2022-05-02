@@ -131,7 +131,7 @@ export default function ProcessDialog({
 
   // Define o número do processo
   useEffect(() => {
-    setProcess({ ...process, numeroProcesso });
+    setProcess({ ...process, NRProcessoPrincipal: numeroProcesso });
   }, []);
 
   return (

@@ -46,11 +46,11 @@ export default function AnaliseForm(): JSX.Element {
         <FormTextField
           label="Análise da GPO"
           fullWidth
-          value={process.analiseGPO || ''}
+          value={process.DSTituloAnaliseREIDI || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              analiseGPO: e.target.value,
+              DSTituloAnaliseREIDI: e.target.value,
             })
           }
         />
@@ -58,11 +58,11 @@ export default function AnaliseForm(): JSX.Element {
       <Grid item xs={4}>
         <FormDatePicker
           label="Início da Análise - GPO"
-          value={process.inicioAnaliseGPO || null}
+          value={process.DTInicioAnaliseREIDI || null}
           onChange={(newValue) =>
             setProcess({
               ...process,
-              inicioAnaliseGPO: newValue,
+              DTInicioAnaliseREIDI: newValue,
             })
           }
         />
@@ -70,11 +70,11 @@ export default function AnaliseForm(): JSX.Element {
       <Grid item xs={4}>
         <FormDatePicker
           label="Término da Análise - GPO"
-          value={process.terminoAnaliseGPO || null}
+          value={process.DTFimAnaliseREIDI || null}
           onChange={(newValue) =>
             setProcess({
               ...process,
-              terminoAnaliseGPO: newValue,
+              DTFimAnaliseREIDI: newValue,
             })
           }
         />
@@ -129,11 +129,11 @@ export default function AnaliseForm(): JSX.Element {
       <Grid item xs={4}>
         <FormTextField
           label="Manifestação da ANTAQ"
-          value={process.manifestacaoANTAQ || ''}
+          value={process.DSEstadoManifestacaoANTAQ || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              manifestacaoANTAQ: e.target.value,
+              DSEstadoManifestacaoANTAQ: e.target.value,
             })
           }
           helperText="Diretoria/SOG"
@@ -143,11 +143,11 @@ export default function AnaliseForm(): JSX.Element {
         <FormTextField
           label="Deliberação da Diretoria"
           fullWidth
-          value={process.deliberacaoDiretoria || ''}
+          value={process.DSTituloAnaliseREIDI || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              deliberacaoDiretoria: e.target.value,
+              DSTituloAnaliseREIDI: e.target.value,
             })
           }
           helperText="e/ou declaração técnica SOG"

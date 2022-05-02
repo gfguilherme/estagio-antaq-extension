@@ -3,58 +3,58 @@ import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { apiDB } from '../services/api';
 
 export interface Process {
-  analiseGPO: string;
-  andamentoGPO: string;
+  DSTituloAnaliseREIDI: string; //
+  IDEstadoAnaliseREIDI: number; //
   arrendatario: string;
-  NRCodigoMINFRA: string | null;
-  IDContratoArrendamento: number | null;
-  contratoArrendamento: string;
-  DTProtocoloPedido: Date | string;
-  deliberacaoDiretoria: string;
-  inicioAnaliseGPO: Date | string;
-  manifestacaoANTAQ: string;
-  NRProcessoPrincipal: string;
-  IDProtocoloSEI: string;
+  NRCodigoMINFRA: string | null; //
+  IDContratoArrendamento: number | null; //
+  contratoArrendamento: string; 
+  DTProtocoloPedido: Date | string; //
+  DSTituloManifestacaoANTAQ: string; //
+  DTInicioAnaliseREIDI: Date | string; //
+  DSEstadoManifestacaoANTAQ: string; //
+  NRProcessoPrincipal: string; //
+  IDProtocoloSEI: string; //
   objeto: string;
   observacoes: string;
   perfilCarga: string;
-  portoOrganizado: string;
+  portoOrganizado: string; //
   prazoAnalise: string;
-  NRProtocoloMINFRA: string;
+  NRProtocoloMINFRA: string; //
   rowNumber: string;
-  situacao: string;
-  tecnico: string;
-  terminoAnaliseGPO: Date | string;
+  DSObservacoesSituacao: string;
+  tecnico: string; 
+  DTFimAnaliseREIDI: Date | string; //
   tipoCarga: string;
-  VLInvestimentoProposto
+  VLInvestimentoProposto //
   : number;
 }
 
 const initialProcess: Process = {
-  analiseGPO: '',
-  andamentoGPO: '',
+  DSTituloAnaliseREIDI: '', //
+  IDEstadoAnaliseREIDI: 1 , //
   arrendatario: '',
-  NRCodigoMINFRA: '',
-  IDContratoArrendamento: null,
-  contratoArrendamento: '',
-  DTProtocoloPedido: '',
-  deliberacaoDiretoria: '',
-  inicioAnaliseGPO: '',
-  manifestacaoANTAQ: '',
-  NRProcessoPrincipal: '',
-  IDProtocoloSEI: '',
+  NRCodigoMINFRA: '', //
+  IDContratoArrendamento: null, //
+  contratoArrendamento: '', 
+  DTProtocoloPedido: '', //
+  DSTituloManifestacaoANTAQ: '', // 
+  DTInicioAnaliseREIDI: '', //
+  DSEstadoManifestacaoANTAQ: '', //
+  NRProcessoPrincipal: '', //
+  IDProtocoloSEI: '', //       
   objeto: '',
   observacoes: '',
   perfilCarga: '',
-  portoOrganizado: '',
+  portoOrganizado: '', //
   prazoAnalise: '',
-  NRProtocoloMINFRA: '',
+  NRProtocoloMINFRA: '', //
   rowNumber: '',
-  situacao: '',
+  DSObservacoesSituacao: '',
   tecnico: '',
-  terminoAnaliseGPO: '',
+  DTFimAnaliseREIDI: '', //
   tipoCarga: '',
-  VLInvestimentoProposto: 0,
+  VLInvestimentoProposto: 0, //
 };
 
 type ProcessContextType = {
