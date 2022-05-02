@@ -149,20 +149,6 @@ export default function ProjetoForm(): JSX.Element {
           }
         />
       </Grid>
-      <Grid item xs={12}>
-        <FormTextField
-          disabled
-          label="Observações"
-          multiline
-          value={process.observacoes || ''}
-          onChange={(e) =>
-            setProcess({
-              ...process,
-              observacoes: e.target.value,
-            })
-          }
-        />
-      </Grid>
     </Grid>
   );
 }
