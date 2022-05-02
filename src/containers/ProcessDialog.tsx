@@ -47,11 +47,11 @@ export default function ProcessDialog({
         IDContratoArrendamento: process.IDContratoArrendamento,
         NRProcessoPrincipal: numeroProcesso,
         IDProtocoloSEI: idProcedimento,
-        DTProtocoloPedido: process.dataProtocoloPedido,
-        VLInvestimentoProposto: process.valorInvestimentoProposto,
+        DTProtocoloPedido: process.DTProtocoloPedido,
+        VLInvestimentoProposto: process.VLInvestimentoProposto,
         DSObservacoesSituacao: process.observacoes,
-        NRProtocoloMINFRA: process.protocoloMInfra,
-        NRCodigoMINFRA: process.codigoMInfra,
+        NRProtocoloMINFRA: process.NRProtocoloMINFRA,
+        NRCodigoMINFRA: process.NRCodigoMINFRA,
       });
 
       // Atualiza a lista de botões
@@ -75,11 +75,18 @@ export default function ProcessDialog({
 
   // Requisita a atualização do processo
   const handleProcessUpdate = async (callback) => {
+    const encodedProcessNumber = encodeURIComponent(numeroProcesso);
+
     try {
       setLoading(true);
 
-      const value = createRowModel(process);
-      await api.put(`/spreadsheet/${process.id}`, { value });
+      await apiDB.put(`/controlereidi/${encodedProcessNumber}` , {
+        DTProtocoloPedido: process.DTProtocoloPedido,
+        VLInvestimentoProposto: process.VLInvestimentoProposto,
+        DSObservacoesSituacao: null, //ver eduardo
+        NRProtocoloMINFRA: process.NRProtocoloMINFRA,
+        NRCodigoMINFRA: process.NRCodigoMINFRA,
+      });
 
       const message = 'Processo atualizado!';
       const severity = 'success';

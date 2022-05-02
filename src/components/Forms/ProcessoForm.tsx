@@ -12,11 +12,11 @@ export default function ProcessoForm() {
       <Grid item xs={4}>
         <FormTextField
           label="Número do Processo SEI"
-          value={process.numeroProcesso || ''}
+          value={process.NRProcessoPrincipal || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              numeroProcesso: e.target.value,
+              NRProcessoPrincipal: e.target.value,
             })
           }
         />
@@ -24,11 +24,11 @@ export default function ProcessoForm() {
       <Grid item xs={4}>
         <FormTextField
           label="Protocolo MInfra"
-          value={process.protocoloMInfra || ''}
+          value={process.NRProtocoloMINFRA || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              protocoloMInfra: e.target.value,
+              NRProtocoloMINFRA: e.target.value,
             })
           }
         />
@@ -36,11 +36,11 @@ export default function ProcessoForm() {
       <Grid item xs={4}>
         <FormTextField
           label="Código MInfra"
-          value={process.codigoMInfra || ''}
+          value={process.NRCodigoMINFRA || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              codigoMInfra: e.target.value,
+              NRCodigoMINFRA: e.target.value,
             })
           }
         />
@@ -61,11 +61,11 @@ export default function ProcessoForm() {
       <Grid item xs={4}>
         <FormDatePicker
           label="Data de Protocolo do Pedido"
-          value={process.dataProtocoloPedido || null}
+          value={process.DTProtocoloPedido || null}
           onChange={(newValue) =>
             setProcess({
               ...process,
-              dataProtocoloPedido: newValue,
+              DTProtocoloPedido: newValue,
             })
           }
         />

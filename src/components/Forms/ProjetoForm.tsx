@@ -81,11 +81,11 @@ export default function ProjetoForm(): JSX.Element {
       <Grid item xs={4}>
         <FormTextField
           label="Valor do Investimento Proposto"
-          value={process.valorInvestimentoProposto || ''}
+          value={process.VLInvestimentoProposto || ''}
           onChange={(e) =>
             setProcess({
               ...process,
-              valorInvestimentoProposto: parseInt(e.target.value),
+              VLInvestimentoProposto: parseInt(e.target.value),
             })
           }
           InputProps={{

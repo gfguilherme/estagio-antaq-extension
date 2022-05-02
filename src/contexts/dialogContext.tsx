@@ -1,59 +1,60 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 
-import { api } from '../services/api';
+import { apiDB } from '../services/api';
 
 export interface Process {
   analiseGPO: string;
   andamentoGPO: string;
   arrendatario: string;
-  codigoMInfra: string;
+  NRCodigoMINFRA: string | null;
   IDContratoArrendamento: number | null;
   contratoArrendamento: string;
-  dataProtocoloPedido: Date | string;
+  DTProtocoloPedido: Date | string;
   deliberacaoDiretoria: string;
-  id: number;
   inicioAnaliseGPO: Date | string;
   manifestacaoANTAQ: string;
-  numeroProcesso: string;
+  NRProcessoPrincipal: string;
+  IDProtocoloSEI: string;
   objeto: string;
   observacoes: string;
   perfilCarga: string;
   portoOrganizado: string;
   prazoAnalise: string;
-  protocoloMInfra: string;
+  NRProtocoloMINFRA: string;
   rowNumber: string;
   situacao: string;
   tecnico: string;
   terminoAnaliseGPO: Date | string;
   tipoCarga: string;
-  valorInvestimentoProposto: number;
+  VLInvestimentoProposto
+  : number;
 }
 
 const initialProcess: Process = {
   analiseGPO: '',
   andamentoGPO: '',
   arrendatario: '',
-  codigoMInfra: '',
+  NRCodigoMINFRA: '',
   IDContratoArrendamento: null,
   contratoArrendamento: '',
-  dataProtocoloPedido: '',
+  DTProtocoloPedido: '',
   deliberacaoDiretoria: '',
-  id: 0,
   inicioAnaliseGPO: '',
   manifestacaoANTAQ: '',
-  numeroProcesso: '',
+  NRProcessoPrincipal: '',
+  IDProtocoloSEI: '',
   objeto: '',
   observacoes: '',
   perfilCarga: '',
   portoOrganizado: '',
   prazoAnalise: '',
-  protocoloMInfra: '',
+  NRProtocoloMINFRA: '',
   rowNumber: '',
   situacao: '',
   tecnico: '',
   terminoAnaliseGPO: '',
   tipoCarga: '',
-  valorInvestimentoProposto: 0,
+  VLInvestimentoProposto: 0,
 };
 
 type ProcessContextType = {
@@ -75,7 +76,7 @@ export function DialogProvider({ children }: ProcessContextProviderProps) {
   const getProcess = async (processNumber: string) => {
     const encodedProcessNumber = encodeURIComponent(processNumber);
     try {
-      const response = await api.get(`/row/${encodedProcessNumber}`);
+      const response = await apiDB.get(`/controlereidi/${encodedProcessNumber}`);
       setProcess(response.data);
     } catch (error) {
       console.error(error);
