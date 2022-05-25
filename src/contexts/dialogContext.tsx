@@ -43,7 +43,7 @@ const initialProcess: Process = {
   NRProcessoPrincipal: '', //
   IDProtocoloSEI: '', //       
   objeto: '',
-  observacoes: '',
+  DSObservacoesSituacao: '',
   perfilCarga: '',
   portoOrganizado: '', //
   prazoAnalise: '',
@@ -52,7 +52,7 @@ const initialProcess: Process = {
   DSObservacoesSituacao: '', //
   tecnico: '',
   DTFimAnaliseREIDI: '', //
-  tipoCarga: '',
+  NOGrupoMercadoria: '', //
   VLInvestimentoProposto: 0, //
 };
 

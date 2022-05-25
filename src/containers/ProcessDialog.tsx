@@ -83,7 +83,7 @@ export default function ProcessDialog({
       await apiDB.put(`/controlereidi/${encodedProcessNumber}` , {
         DTProtocoloPedido: process.DTProtocoloPedido,
         VLInvestimentoProposto: process.VLInvestimentoProposto,
-        DSObservacoesSituacao: null, //ver eduardo
+        DSObservacoesSituacao: process.DSObservacoesSituacao, //ver eduardo
         NRProtocoloMINFRA: process.NRProtocoloMINFRA,
         NRCodigoMINFRA: process.NRCodigoMINFRA,
       });
